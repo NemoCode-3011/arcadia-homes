@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+@theme {
+  --color-arcadia-charcoal: #1C1F1A;
+  --color-arcadia-stone: #2A2D27;
+  --color-arcadia-bark: #3D4038;
+  --color-arcadia-sand: #C8B99A;
+  --color-arcadia-moss: #6B7C5C;
+  --color-arcadia-leaf: #8FA67A;
+  --color-arcadia-cream: #F2EDE4;}
