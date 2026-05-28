@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { User, Lock, Bell, Home, Camera } from "lucide-react"
+import { ClipboardList } from "lucide-react"
 
 const SettingsPage = () => {
   const [activeTab, setActiveTab] = useState("profile")
@@ -23,6 +24,8 @@ const SettingsPage = () => {
     { id: "assignments", label: "Assignments", icon: Home },
   ]
 
+  const user = JSON.parse(localStorage.getItem("user") || "{}")
+
   return (
     <div className="p-3 lg:p-6 space-y-6">
       {/* Header */}
@@ -40,8 +43,8 @@ const SettingsPage = () => {
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${activeTab === tab.id
-                    ? "bg-arcadia-moss text-arcadia-cream"
-                    : "text-arcadia-sand hover:text-arcadia-cream hover:bg-arcadia-bark"
+                  ? "bg-arcadia-moss text-arcadia-cream"
+                  : "text-arcadia-sand hover:text-arcadia-cream hover:bg-arcadia-bark"
                   }`}>
                 <Icon size={16} />
                 {tab.label}
@@ -191,35 +194,121 @@ const SettingsPage = () => {
           {/* Assignments Tab */}
           {activeTab === "assignments" && (
             <div className="space-y-6">
-              <h2 className="text-xl font-semibold text-arcadia-cream">Property Assignments</h2>
-              <p className="text-arcadia-sand text-sm">
-                Assign unhandled enquiries to agents
-              </p>
-              <hr className="border-arcadia-bark" />
 
-              {/* Unassigned Enquiries */}
-              {[
-                { id: "1", property: "Luxury Villa", sender: "John Feranmi", location: "Victoria Island" },
-                { id: "2", property: "Penthouse", sender: "Bayo Martins", location: "Banana Island" },
-                { id: "3", property: "Mansion", sender: "Emeka Nwachukwu", location: "Lekki" },
-              ].map((enquiry) => (
-                <div
-                  key={enquiry.id}
-                  className="flex items-center justify-between p-4 border border-arcadia-bark rounded-lg">
-                  <div className="space-y-1">
-                    <p className="text-arcadia-cream font-medium">{enquiry.sender}</p>
-                    <p className="text-arcadia-leaf text-sm">{enquiry.property}</p>
-                    <p className="text-arcadia-sand text-xs">📍 {enquiry.location}</p>
+              {user.role === "super_admin" ? (
+                <>
+                  {/* Super Admin View */}
+                  <div>
+                    <h2 className="text-xl font-semibold text-arcadia-cream">Property Assignments</h2>
+                    <p className="text-arcadia-sand text-sm mt-1">
+                      Assign unhandled enquiries to agents
+                    </p>
                   </div>
-                  <select className="bg-arcadia-bark border border-arcadia-bark rounded-lg px-3 py-2 text-arcadia-cream text-sm focus:outline-none focus:border-arcadia-moss">
-                    <option value="">Assign to agent</option>
-                    <option value="1">Vivian A.</option>
-                    <option value="2">Lekan A.</option>
-                    <option value="3">Hannah O.</option>
-                    <option value="4">Israel J.</option>
-                  </select>
-                </div>
-              ))}
+                  <hr className="border-arcadia-bark" />
+
+                  {[
+                    { id: "1", property: "Luxury Villa", sender: "John Feranmi", location: "Victoria Island" },
+                    { id: "2", property: "Penthouse", sender: "Bayo Martins", location: "Banana Island" },
+                    { id: "3", property: "Mansion", sender: "Emeka Nwachukwu", location: "Lekki" },
+                  ].map((enquiry) => (
+                    <div
+                      key={enquiry.id}
+                      className="flex items-center justify-between p-4 border border-arcadia-bark rounded-lg"
+                    >
+                      <div className="space-y-1">
+                        <p className="text-arcadia-cream font-medium">{enquiry.sender}</p>
+                        <p className="text-arcadia-leaf text-sm">{enquiry.property}</p>
+                        <p className="text-arcadia-sand text-xs">📍 {enquiry.location}</p>
+                      </div>
+                      <select className="bg-arcadia-bark border border-arcadia-bark rounded-lg px-3 py-2 text-arcadia-cream text-sm focus:outline-none focus:border-arcadia-moss">
+                        <option value="">Assign to agent</option>
+                        <option value="1">Vivian A.</option>
+                        <option value="2">Lekan A.</option>
+                        <option value="3">Hannah O.</option>
+                        <option value="4">Israel J.</option>
+                      </select>
+                    </div>
+                  ))}
+                </>
+              ) : (
+                <>
+                  {/* Agent View */}
+                  <div>
+                    <h2 className="text-xl font-semibold text-arcadia-cream">My Assignments</h2>
+                    <p className="text-arcadia-sand text-sm mt-1">
+                      Enquiries and properties assigned to you
+                    </p>
+                  </div>
+                  <hr className="border-arcadia-bark" />
+
+                  {/* Fake assignments for this agent — replace with filtered API data later */}
+                  {[
+                    {
+                      id: "1",
+                      property: "Luxury Villa",
+                      sender: "John Feranmi",
+                      location: "Victoria Island",
+                      status: "Pending",
+                    },
+                    {
+                      id: "2",
+                      property: "Penthouse",
+                      sender: "Bayo Martins",
+                      location: "Banana Island",
+                      status: "In Progress",
+                    },
+                  ].length === 0 ? (
+                    <div className="flex flex-col items-center justify-center py-16 text-center">
+                      <div className="w-12 h-12 rounded-full bg-arcadia-bark/50 flex items-center justify-center mb-4">
+                        <ClipboardList size={20} className="text-arcadia-sand/40" />
+                      </div>
+                      <p className="text-arcadia-sand/60 text-sm">No assignments yet</p>
+                      <p className="text-arcadia-sand/30 text-xs mt-1">
+                        Your assigned enquiries will appear here
+                      </p>
+                    </div>
+                  ) : (
+                    [
+                      {
+                        id: "1",
+                        property: "Luxury Villa",
+                        sender: "John Feranmi",
+                        location: "Victoria Island",
+                        status: "Pending",
+                      },
+                      {
+                        id: "2",
+                        property: "Penthouse",
+                        sender: "Bayo Martins",
+                        location: "Banana Island",
+                        status: "In Progress",
+                      },
+                    ].map((assignment) => (
+                      <div
+                        key={assignment.id}
+                        className="flex items-center justify-between p-4 border border-arcadia-bark rounded-lg"
+                      >
+                        <div className="space-y-1">
+                          <p className="text-arcadia-cream font-medium">{assignment.sender}</p>
+                          <p className="text-arcadia-leaf text-sm">{assignment.property}</p>
+                          <p className="text-arcadia-sand text-xs">📍 {assignment.location}</p>
+                        </div>
+
+                        {/* Status badge */}
+                        <span
+                          className={`text-xs px-3 py-1 rounded-full font-medium ${assignment.status === "Pending"
+                              ? "bg-yellow-500/10 text-yellow-400 border border-yellow-500/20"
+                              : assignment.status === "In Progress"
+                                ? "bg-arcadia-moss/10 text-arcadia-moss border border-arcadia-moss/20"
+                                : "bg-arcadia-bark/50 text-arcadia-sand border border-arcadia-bark"
+                            }`}>
+                          {assignment.status}
+                        </span>
+                      </div>
+                    ))
+                  )}
+                </>
+              )}
             </div>
           )}
         </div>
