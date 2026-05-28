@@ -13,32 +13,36 @@ import ListingsPage from "./pages/public/ListingsPage";
 import ListingsDetails from "./pages/public/ListingsDetails";
 import ContactPage from "./pages/public/ContactPage";
 import ManageAgentPage from "./pages/admin/ManageAgentPage";
+import AdminSignInPage from "./pages/admin/AdminSignInPage";
 
 
 const App = () => {
   return (
     <div>
       <Routes>
-        {/* Auth routes */}
-        <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/signin" element={<SignInPage />} />
-
         {/* Public routes */}
         <Route element={<PublicDashboardLayout />}>
           <Route path="/" element={<LandingPage />} />
           <Route path="/listings" element={<ListingsPage />} />
-          <Route path="/details" element={<ListingsDetails />} />
-          <Route path="/contacts" element={<ContactPage />} />
+          <Route path="/listings/:id" element={<ListingsDetails />} />
+          <Route path="/contact-us" element={<ContactPage/>} />
         </Route>
 
-        {/* admin dashboard routes */}
+        {/* Public auth */}
+        <Route path="/signin" element={<SignInPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+
+        {/* Admin auth — hidden from public */}
+        <Route path="/admin/signin" element={<AdminSignInPage />} />
+
+        {/* Admin dashboard */}
         <Route element={<DashboardLayout />}>
-          <Route path="/dashboard" element={<HomePage />} />
+          <Route path="/admin-dashboard" element={<HomePage />} />
           <Route path="/properties" element={<Propertiespage />} />
-          <Route path="/properties/propertiesdetail/:id" element={<PropertyDetails />} />
-          <Route path="/settings" element={<Settings />} />
+          <Route path="/propertiesdetail/:id" element={<PropertyDetails />} />
           <Route path="/messages" element={<MessagesPage />} />
-          <Route path="/agents" element={<ManageAgentPage/>} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/agents" element={<ManageAgentPage />} />
         </Route>
       </Routes>
     </div>

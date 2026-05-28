@@ -12,7 +12,7 @@ const Sidebar = ({onClose}: SideBarProp) => {
       {/* Logo */}
       <div className="p-6 border-b border-arcadia-sand ">
         <img src={logoimage} alt="" className="w-40 object-contain md:w-52" style={{margin: '-40px -20px -10px -10px'}} />
-        <p className="text-xs tracking-widest mt-[-20px]" style={{ color: '#E6E6E6' }}>
+        <p className="text-xs tracking-widest -mt-5" style={{ color: '#E6E6E6' }}>
           MODERN NATURE RESIDENCES
         </p>
       </div>
@@ -20,7 +20,7 @@ const Sidebar = ({onClose}: SideBarProp) => {
       {/* Nav */}
       <nav className="flex flex-col gap-1 px-4 mt-4">
         <NavLink
-          to="/dashboard"
+          to="/admin-dashboard"
           onClick={onClose}
           className={({ isActive }) =>
             `px-4 py-3 rounded-lg text-sm font-medium transition-colors ${isActive

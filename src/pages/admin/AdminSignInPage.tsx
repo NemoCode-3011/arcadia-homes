@@ -1,32 +1,33 @@
-import houseimage from "/react/arcadia-homes/src/assets/house-4.jpg"
-import logoimage from "/react/arcadia-homes/src/assets/logo-img-2.png"
-import { useNavigate } from "react-router-dom"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import logo from "../../assets/logo-img-2.png"
+import house from "../../assets/housee.jpg"
 import { Eye, EyeOff } from "lucide-react"
-const SignInPage = () => {
 
-    const navigate = useNavigate()
-      
-      const [formData, setFormData] = useState({
-        email: "",
-        password: ""
-      })
-    
-      const [showPassword, setShowPassword] = useState(false)
-    
-      const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value })
-      }
-    
-      const handleSubmit = () => {
-        navigate("/")
-      }
+const AdminSignInPage = () => {
+  const navigate = useNavigate()
+  
+  const [formData, setFormData] = useState({
+    email: "",
+    password: ""
+  })
+
+  const [showPassword, setShowPassword] = useState(false)
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
+
+  const handleSubmit = () => {
+    navigate("/dashboard")
+  }
+
   return (
-     <div className="flex h-screen bg-arcadia-charcoal">
+    <div className="flex h-screen bg-arcadia-charcoal">
       {/* Left side — image */}
       <div className="hidden lg:block basis-1/2">
         <img 
-          src={houseimage} 
+          src={house} 
           alt="Arcadia Property" 
           className="w-full h-full object-cover"/>
       </div>
@@ -36,7 +37,7 @@ const SignInPage = () => {
 
           {/* Logo */}
           <div className="flex flex-col items-center">
-            <img src={logoimage} alt="Arcadia" className="h-30 w-auto object-contain" />
+            <img src={logo} alt="Arcadia" className="h-30 w-auto object-contain" />
             <p className="text-xs tracking-widest text-arcadia-sand mt-1">
               MODERN NATURE RESIDENCES
             </p>
@@ -47,7 +48,7 @@ const SignInPage = () => {
               Welcome back
             </h1>
             <p className="text-arcadia-sand text-sm">
-              Sign in to your account
+              Sign in to your admin account
             </p>
           </div>
           {/* Form */}
@@ -107,4 +108,4 @@ const SignInPage = () => {
   )
 }
 
-export default SignInPage
+export default AdminSignInPage
