@@ -12,7 +12,7 @@ const LandingPage = () => {
     <ParallaxProvider>
       <div className="bg-arcadia-charcoal">
         {/* ─── HERO SECTION ─── */}
-        <section className="relative h-200 flex items-center justify-center overflow-hidden ">
+        <section className="relative h-[130vh] flex items-center justify-center overflow-hidden ">
           {/* Background Image with Parallax */}
           <Parallax speed={-15} className="absolute inset-0 w-full h-full">
             <img
@@ -23,7 +23,6 @@ const LandingPage = () => {
             {/* Dark overlay */}
             <div className="absolute inset-0 bg-black/60" />
           </Parallax>
-
           {/* Hero Content */}
           <div className="relative z-10 text-center px-6 space-y-6 mt-10">
             <p className="text-xs tracking-[0.4em] text-arcadia-sand uppercase">
@@ -59,13 +58,10 @@ const LandingPage = () => {
               <div className="w-px h-8 bg-arcadia-sand" />
             </div>
           </div>
-
         </section>
-
         {/* ─── FEATURED PROPERTIES ─── */}
         <section className="bg-arcadia-cream py-24 px-6">
           <div className="max-w-7xl mx-auto space-y-12">
-
             {/* Section Header */}
             <div className="flex items-end justify-between">
               <div className="space-y-2">
@@ -191,7 +187,6 @@ const LandingPage = () => {
 
         {/* ─── CTA SECTION ─── */}
         <section className="relative py-32 px-6 overflow-hidden">
-
           {/* Background with Parallax */}
           <Parallax speed={-8} className="absolute inset-0">
             <img
@@ -228,9 +223,7 @@ const LandingPage = () => {
               </button>
             </div>
           </div>
-
         </section>
-
       </div>
     </ParallaxProvider>
   )

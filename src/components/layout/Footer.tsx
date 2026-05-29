@@ -85,7 +85,7 @@ const Footer = () => {
       </div>
 
       {/* Contact Bar */}
-      <div className="border-t border-arcadia-bark">
+      <div className="border-t border-arcadia-bark lg:flex justify-between">
         <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex flex-col sm:flex-row gap-4 text-sm text-arcadia-sand">
             <span>📧 hello@arcadiaresidences.com</span>

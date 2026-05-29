@@ -1,5 +1,5 @@
 import houseimage from "/react/arcadia-homes/src/assets/house-4.jpg"
-import logoimage from "/react/arcadia-homes/src/assets/logo-img-4.png"
+import logoimage from "/react/arcadia-homes/src/assets/logo-img-5.png"
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 import { Eye, EyeOff } from "lucide-react"

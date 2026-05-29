@@ -50,6 +50,7 @@ const Propertiespage = () => {
             price={property.price}
             bedrooms={property.bedrooms}
             bathrooms={property.bathrooms}
+            linkTo={`/propertiesdetail/${property.id}`}
           />
         ))}
       </div>

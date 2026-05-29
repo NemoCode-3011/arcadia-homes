@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom"
 
-
-interface PropertyCardProps{
+interface PropertyCardProps {
   image: string
   status: string
   houseType: string
@@ -10,20 +9,20 @@ interface PropertyCardProps{
   bedrooms: number
   bathrooms: number
   id: string
-
+  linkTo?: string  // add this
 }
-const PropertyCard = ({image, status, houseType, location, price, bedrooms, bathrooms, id}: PropertyCardProps) => {
 
-  const navigate= useNavigate()
+const PropertyCard = ({ image, status, houseType, location, price, bedrooms, bathrooms, id, linkTo }: PropertyCardProps) => {
+  const navigate = useNavigate()
 
   return (
-    <div className="rounded-xl overflow-hidden bg-arcadia-stone cursor-pointer hover:scale-105 transition-transform" onClick={()=> navigate(`propertiesdetail/${id}`)}>
-      {/* image */}
-      <img src={image} alt={houseType} className="w-full h-48 object-cover"/>
-
-      {/* content of card */}
+    <div
+      className="rounded-xl overflow-hidden bg-arcadia-stone cursor-pointer hover:scale-105 transition-transform"
+      onClick={() => navigate(linkTo ?? `/listings/${id}`)}  // defaults to public if not passed
+    >
+      <img src={image} alt={houseType} className="w-full h-48 object-cover" />
       <div className="p-4">
-       <span className="text-xs font-medium px-2 py-1 rounded-full bg-arcadia-moss text-arcadia-cream">{status}</span>
+        <span className="text-xs font-medium px-2 py-1 rounded-full bg-arcadia-moss text-arcadia-cream">{status}</span>
         <h2 className="font-semibold text-lg text-arcadia-cream mt-2">{houseType}</h2>
         <p className="text-sm text-arcadia-sand mt-1">📍 {location}</p>
         <p className="text-lg font-semi-bold text-arcadia-leaf mt-2">₦ {price.toLocaleString()}</p>
