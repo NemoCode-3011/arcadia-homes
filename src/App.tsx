@@ -14,6 +14,7 @@ import ListingsDetails from "./pages/public/ListingsDetails";
 import ContactPage from "./pages/public/ContactPage";
 import ManageAgentPage from "./pages/admin/ManageAgentPage";
 import AdminSignInPage from "./pages/admin/AdminSignInPage";
+import AboutPage from "./pages/public/AboutPage";
 
 
 const App = () => {
@@ -22,12 +23,12 @@ const App = () => {
       <Routes>
         {/* Public routes */}
         <Route element={<PublicDashboardLayout />}>
+          <Route path="/about-us" element={<AboutPage/>} />
           <Route path="/" element={<LandingPage />} />
           <Route path="/listings" element={<ListingsPage />} />
           <Route path="/listings/:id" element={<ListingsDetails />} />
-          <Route path="/contact-us" element={<ContactPage/>} />
+          <Route path="/contact-us" element={<ContactPage />} />
         </Route>
-
         {/* Public auth */}
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/signup" element={<SignUpPage />} />

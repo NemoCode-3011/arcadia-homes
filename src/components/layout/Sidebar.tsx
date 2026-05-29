@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom"
-import logoimage from "/react/arcadia-homes/src/assets/logo-img-3.png"
+import logoimage from "/react/arcadia-homes/src/assets/logo-img-5.png"
 import {
   LayoutDashboard,
   Building2,
@@ -85,7 +85,7 @@ const Sidebar = ({ onClose }: SideBarProp) => {
         <img
           src={logoimage}
           alt="Arcadia Homes"
-          className="w-40 object-contain md:w-52"
+          className="w-40 scale-70 object-contain md:w-52"
           style={{ margin: "-40px -20px -10px -10px" }}
         />
         <p className="text-[10px] tracking-[0.25em] -mt-5 text-arcadia-sand/60 font-light">

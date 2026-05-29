@@ -34,7 +34,7 @@ const AdminSignInPage = () => {
 
     // Simulate a small network delay
     setTimeout(() => {
-      // Temporary fake credentials — replace with real API call later
+      // Temporary fake credentials 
       const fakeUsers = [
         {
           email: "superadmin@arcadia.com",
@@ -92,7 +92,7 @@ const AdminSignInPage = () => {
           className="w-full h-full object-cover"
         />
         {/* Overlay gradient */}
-        <div className="absolute inset-0 bg-gradient-to-r from-arcadia-charcoal/40 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-r from-arcadia-charcoal/40 to-transparent" />
 
         {/* Quote overlay */}
         <div className="absolute bottom-10 left-10 right-10">
@@ -199,11 +199,6 @@ const AdminSignInPage = () => {
                 "Sign In"
               )}
             </button>
-            {/* Temp hint*/}
-            <div className="text-center text-xs text-arcadia-sand/30 space-y-0.5">
-              <p>superadmin@arcadia.com / admin123</p>
-              <p>agent@arcadia.com / agent123</p>
-            </div>
           </div>
         </div>
       </div>

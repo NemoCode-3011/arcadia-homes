@@ -1,5 +1,5 @@
 import houseimage from "/react/arcadia-homes/src/assets/house-3.jpg"
-import logoimage from "/react/arcadia-homes/src/assets/logo-img-2.png"
+import logoimage from "/react/arcadia-homes/src/assets/logo-img-5.png"
 import { UserRound } from 'lucide-react';
 import { Mail } from 'lucide-react';
 import { Lock } from 'lucide-react';
@@ -67,5 +67,4 @@ const SignUpPage = () => {
     </div>
   )
 }
-
 export default SignUpPage

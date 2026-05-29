@@ -7,4 +7,16 @@
   --color-arcadia-sand: #C8B99A;
   --color-arcadia-moss: #6B7C5C;
   --color-arcadia-leaf: #8FA67A;
-  --color-arcadia-cream: #F2EDE4;}
+  --color-arcadia-cream: #F2EDE4;
+
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body: 'Poppins', sans-serif;
+}
+
+* {
+  font-family: var(--font-body);
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+}
