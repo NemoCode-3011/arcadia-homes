@@ -15,38 +15,51 @@ import ContactPage from "./pages/public/ContactPage";
 import ManageAgentPage from "./pages/admin/ManageAgentPage";
 import AdminSignInPage from "./pages/admin/AdminSignInPage";
 import AboutPage from "./pages/public/AboutPage";
-
-
+import LoadingScreen from "./components/ui/LoadingScreen";
+import { useState } from "react";
+import ProtectedRoute from "./components/layout/ProtectedRoute"
+import { AuthProvider } from "./context/AuthContext"
 const App = () => {
+  const [loading, setLoading] = useState(true)
+
+  if (loading) {
+    return <LoadingScreen onComplete={() => setLoading(false)} />
+  }
+
   return (
-    <div>
+    <AuthProvider>
       <Routes>
+
         {/* Public routes */}
         <Route element={<PublicDashboardLayout />}>
-          <Route path="/about-us" element={<AboutPage/>} />
           <Route path="/" element={<LandingPage />} />
           <Route path="/listings" element={<ListingsPage />} />
           <Route path="/listings/:id" element={<ListingsDetails />} />
-          <Route path="/contact-us" element={<ContactPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/contact" element={<ContactPage />} />
         </Route>
+
         {/* Public auth */}
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/signup" element={<SignUpPage />} />
 
-        {/* Admin auth — hidden from public */}
+        {/* Admin auth */}
         <Route path="/admin/signin" element={<AdminSignInPage />} />
 
-        {/* Admin dashboard */}
-        <Route element={<DashboardLayout />}>
-          <Route path="/admin-dashboard" element={<HomePage />} />
-          <Route path="/properties" element={<Propertiespage />} />
-          <Route path="/propertiesdetail/:id" element={<PropertyDetails />} />
-          <Route path="/messages" element={<MessagesPage />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/agents" element={<ManageAgentPage />} />
+        {/* Protected admin routes */}
+        <Route element={<ProtectedRoute />}>
+          <Route element={<DashboardLayout />}>
+            <Route path="/dashboard" element={<HomePage />} />
+            <Route path="/properties" element={<Propertiespage />} />
+            <Route path="/propertiesdetail/:id" element={<PropertyDetails />} />
+            <Route path="/messages" element={<MessagesPage />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/agents" element={<ManageAgentPage />} />
+          </Route>
         </Route>
+
       </Routes>
-    </div>
+    </AuthProvider>
   )
 }
 

@@ -302,7 +302,7 @@ const ContactPage = () => {
               </div>
 
               {/* Map embed */}
-              <div className="rounded-2xl overflow-hidden border border-arcadia-sand/30 h-[450px]">
+              <div className="rounded-2xl overflow-hidden border border-arcadia-sand/30 h-112.5">
                 <iframe
                   title="Arcadia Homes Location"
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.7286989763!2d3.4213!3d6.4281!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMjUnNDEuMiJOIDPCsDI1JzE2LjciRQ!5e0!3m2!1sen!2sng!4v1234567890"

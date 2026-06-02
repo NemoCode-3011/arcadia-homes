@@ -1,4 +1,7 @@
 import { useNavigate } from "react-router-dom"
+import { MapPin } from 'lucide-react';
+import { Bath } from 'lucide-react';
+import { Bed } from 'lucide-react';
 
 interface PropertyCardProps {
   image: string
@@ -24,9 +27,9 @@ const PropertyCard = ({ image, status, houseType, location, price, bedrooms, bat
       <div className="p-4">
         <span className="text-xs font-medium px-2 py-1 rounded-full bg-arcadia-moss text-arcadia-cream">{status}</span>
         <h2 className="font-semibold text-lg text-arcadia-cream mt-2">{houseType}</h2>
-        <p className="text-sm text-arcadia-sand mt-1">📍 {location}</p>
+        <p className="text-sm text-arcadia-sand mt-1 flex gap-2"><MapPin size={20}/> {location}</p>
         <p className="text-lg font-semi-bold text-arcadia-leaf mt-2">₦ {price.toLocaleString()}</p>
-        <p className="text-sm text-arcadia-sand mt-2">🛏️ {bedrooms} beds &nbsp; 🛁 {bathrooms} baths</p>
+        <p className="text-sm text-arcadia-sand mt-2 flex gap-2"><Bed size={20} /> {bedrooms} beds &nbsp; <Bath size={20} /> {bathrooms} baths</p>
       </div>
     </div>
   )

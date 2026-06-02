@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom"
 import logo from "../../assets/logo-img-2.png"
 import house from "../../assets/housee.jpg"
 import { Eye, EyeOff } from "lucide-react"
+import { useAuth } from "../../context/AuthContext"
 
 const AdminSignInPage = () => {
   const navigate = useNavigate()
+  const { adminLogin } = useAuth()
 
   const [formData, setFormData] = useState({
     email: "",
@@ -24,7 +26,6 @@ const AdminSignInPage = () => {
   const handleSubmit = () => {
     setError("")
 
-    // Basic validation
     if (!formData.email || !formData.password) {
       setError("Please enter both email and password.")
       return
@@ -32,21 +33,19 @@ const AdminSignInPage = () => {
 
     setLoading(true)
 
-    // Simulate a small network delay
     setTimeout(() => {
-      // Temporary fake credentials 
       const fakeUsers = [
         {
           email: "superadmin@arcadia.com",
           password: "admin123",
-          role: "super_admin",
-          name: "Super Admin",
+          role: "super_admin" as const,
+          name: "Temilade A.",
         },
         {
           email: "agent@arcadia.com",
           password: "agent123",
-          role: "agent",
-          name: "Jane Agent",
+          role: "agent" as const,
+          name: "Vivian A.",
         },
       ]
 
@@ -57,30 +56,25 @@ const AdminSignInPage = () => {
       )
 
       if (!match) {
-        setError("Invalid email or password. Please try again.")
+        setError("Invalid email or password.")
         setLoading(false)
         return
       }
 
-      // Store user in localStorage
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
-          email: match.email,
-          role: match.role,
-          name: match.name,
-        })
-      )
+      // use context instead of raw localStorage
+      adminLogin({
+        email: match.email,
+        role: match.role,
+        name: match.name,
+      })
 
       setLoading(false)
-      navigate("/admin-dashboard")
+      navigate("/dashboard")
     }, 800)
   }
-
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") handleSubmit()
   }
-
   return (
     <div className="flex h-screen bg-arcadia-charcoal">
 
@@ -91,7 +85,7 @@ const AdminSignInPage = () => {
           alt="Arcadia Property"
           className="w-full h-full object-cover"
         />
-        {/* Overlay gradient */}
+        {/* Overlay*/}
         <div className="absolute inset-0 bg-linear-to-r from-arcadia-charcoal/40 to-transparent" />
 
         {/* Quote overlay */}
@@ -104,23 +98,19 @@ const AdminSignInPage = () => {
           </p>
         </div>
       </div>
-
-      {/* Right side — form */}
+      {/* form */}
       <div className="flex flex-1 items-center justify-center p-8">
         <div className="w-full max-w-md space-y-8">
-
           {/* Logo */}
           <div className="flex flex-col items-center">
             <img
               src={logo}
               alt="Arcadia"
-              className="h-30 w-auto object-contain"
-            />
+              className="h-30 w-auto object-contain" />
             <p className="text-xs tracking-widest text-arcadia-sand mt-1">
               MODERN NATURE RESIDENCES
             </p>
           </div>
-
           {/* Heading */}
           <div className="space-y-1">
             <h1 className="text-2xl font-semibold text-arcadia-cream">
@@ -130,7 +120,6 @@ const AdminSignInPage = () => {
               Sign in to your admin account
             </p>
           </div>
-
           {/* Error message */}
           {error && (
             <div className="px-4 py-3 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-sm">
@@ -140,7 +129,6 @@ const AdminSignInPage = () => {
 
           {/* Form */}
           <div className="space-y-5">
-
             {/* Email */}
             <div className="space-y-2">
               <label className="text-sm font-medium text-arcadia-sand">
@@ -169,7 +157,7 @@ const AdminSignInPage = () => {
                   value={formData.password}
                   onChange={handleChange}
                   onKeyDown={handleKeyDown}
-                  className="w-full h-11 px-4 bg-transparent border border-arcadia-bark rounded-lg text-arcadia-cream placeholder:text-arcadia-bark focus:outline-none focus:border-arcadia-moss transition-colors pr-12"/>
+                  className="w-full h-11 px-4 bg-transparent border border-arcadia-bark rounded-lg text-arcadia-cream placeholder:text-arcadia-bark focus:outline-none focus:border-arcadia-moss transition-colors pr-12" />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}

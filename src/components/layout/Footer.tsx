@@ -3,6 +3,10 @@ import logo from "../../assets/logo-img-5.png"
 import { CiLinkedin } from "react-icons/ci";
 import { FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import { Mail } from 'lucide-react';
+import { Phone } from 'lucide-react';
+import { MapPin } from 'lucide-react';
+import { FaFacebook } from "react-icons/fa";
 
 const Footer = () => {
   const navigate = useNavigate()
@@ -32,6 +36,9 @@ const Footer = () => {
             </button>
             <button className="text-arcadia-sand hover:text-arcadia-cream text-xl transition-colors">
              <CiLinkedin />
+            </button>
+            <button className="text-arcadia-sand hover:text-arcadia-cream text-xl transition-colors">
+             <FaFacebook />
             </button>
           </div>
         </div>
@@ -88,9 +95,9 @@ const Footer = () => {
       <div className="border-t border-arcadia-bark lg:flex justify-between">
         <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex flex-col sm:flex-row gap-4 text-sm text-arcadia-sand">
-            <span>📧 hello@arcadiaresidences.com</span>
-            <span>📞 +234 801 234 5678</span>
-            <span>📍 Victoria Island, Lagos</span>
+            <span className="flex gap-2"><Mail size={20} className="text-arcadia-sand" /> hello@arcadiaresidences.com</span>
+            <span className="flex gap-2"><Phone size={20} /> +234 801 234 5678</span>
+            <span className="flex gap-2"><MapPin size={20} /> Victoria Island, Lagos</span>
           </div>
         </div>
       </div>

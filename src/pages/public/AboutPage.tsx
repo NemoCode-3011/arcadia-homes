@@ -149,7 +149,7 @@ const AboutPage = () => {
                 className="w-full h-[450px] object-cover rounded-2xl"
               />
               {/* Floating stat card */}
-              <div className="absolute -bottom-6 -left-6 bg-arcadia-stone border border-arcadia-bark rounded-xl p-5 shadow-xl">
+              <div className="absolute -bottom-4 -left-2 lg:-bottom-6 lg:-left-6 bg-arcadia-stone border border-arcadia-bark rounded-xl p-5 shadow-xl">
                 <p className="text-3xl font-semibold text-arcadia-cream">10+</p>
                 <p className="text-arcadia-sand text-sm mt-1">Years of Excellence</p>
               </div>
