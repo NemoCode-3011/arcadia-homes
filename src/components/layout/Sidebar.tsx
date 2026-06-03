@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom"
-import logoimage from "/react/arcadia-homes/src/assets/logo-img-5.png"
+import logoimage from "../../assets/logo-img-5.png"
 import {
   LayoutDashboard,
   Building2,
