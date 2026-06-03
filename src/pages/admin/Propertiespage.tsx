@@ -9,19 +9,7 @@ const Propertiespage = () => {
 
 
   const filtered = activeFilter === "All" ? properties : properties.filter((p) => p.status === activeFilter)
-
   const [openModal, setOpenModal] = useState(false)
-
-  const [formData, setFormData] = useState({
-    housetype: "",
-    location: "",
-    price: 0,
-    bedrooms: 0,
-    bathrooms: 0,
-    status: "For Sale",
-    description: ""
-  })
-
   return (
     <div className="space-y-5">
       <header className="space-y-3 ">

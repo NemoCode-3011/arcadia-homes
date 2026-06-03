@@ -92,7 +92,6 @@ const AboutPage = () => {
   return (
     <ParallaxProvider>
       <div className="bg-arcadia-charcoal">
-
         {/* ── HERO ── */}
         <section className="relative h-screen flex items-center justify-center overflow-hidden">
           <Parallax speed={-10} className="absolute inset-0 w-full h-full">
