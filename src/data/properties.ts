@@ -1,13 +1,13 @@
-import house1 from "/react/arcadia-homes/src/assets/villa.jpg"
-import house2 from "/react/arcadia-homes/src/assets/Germany.jpg"
-import house3 from "/react/arcadia-homes/src/assets/luxury-1.jpg"
-import house4 from "/react/arcadia-homes/src/assets/luxury-3.jpg"
-import house5 from "/react/arcadia-homes/src/assets/colonial.jpg"
-import house6 from "/react/arcadia-homes/src/assets/moderndu.jpg"
-import house7 from "/react/arcadia-homes/src/assets/apartments.jpg"
-import house8 from "/react/arcadia-homes/src/assets/mansion.jpg"
-import house9 from "/react/arcadia-homes/src/assets/luxury-2.jpg"
-import house10 from "/react/arcadia-homes/src/assets/loft.jpg"
+import house1 from "../assets/villa.jpg";
+import house2 from "../assets/Germany.jpg";
+import house3 from "../assets/luxury-1.jpg";
+import house4 from "../assets/luxury-3.jpg";
+import house5 from "../assets/colonial.jpg";
+import house6 from "../assets/moderndu.jpg"
+import house7 from "../assets/apartments.jpg"
+import house8 from "../assets/mansion.jpg"
+import house9 from "../assets/luxury-2.jpg"
+import house10 from "../assets/loft.jpg"
 
 export const properties = [
 
