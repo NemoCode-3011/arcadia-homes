@@ -15,15 +15,13 @@ const ListingsDetails = () => {
           <p className="text-arcadia-cream font-medium">Property not found</p>
           <button
             onClick={() => navigate("/listings")}
-            className="text-sm text-arcadia-moss hover:text-arcadia-leaf transition-colors"
-          >
+            className="text-sm text-arcadia-moss hover:text-arcadia-leaf transition-colors">
             Back to listings
           </button>
         </div>
       </div>
     )
   }
-
   return (
     <div className="min-h-screen bg-arcadia-charcoal">
 
@@ -35,19 +33,18 @@ const ListingsDetails = () => {
           className="w-full h-full object-cover"
         />
         {/* Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-arcadia-charcoal via-arcadia-charcoal/20 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-arcadia-charcoal via-arcadia-charcoal/20 to-transparent" />
 
         {/* Back button over image */}
         <button
           onClick={() => navigate("/listings")}
-          className="absolute top-6 left-6 flex items-center gap-2 px-4 py-2 rounded-lg bg-arcadia-charcoal/60 backdrop-blur-sm border border-arcadia-bark text-arcadia-cream text-sm hover:bg-arcadia-charcoal/80 transition-colors"
-        >
+          className="absolute top-25 left-6 flex items-center gap-2 px-4 py-2 rounded-lg bg-arcadia-charcoal/60 backdrop-blur-sm border border-arcadia-bark text-arcadia-cream text-sm hover:bg-arcadia-charcoal/80 transition-colors">
           <ArrowLeft size={15} />
           Back to Listings
         </button>
 
         {/* Status badge over image */}
-        <div className="absolute top-6 right-6">
+        <div className="absolute top-30 right-6">
           <span className="px-3 py-1.5 rounded-full bg-arcadia-moss text-arcadia-cream text-xs font-medium">
             {property.status}
           </span>

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { User, Lock, Bell, Home, Camera } from "lucide-react"
 import { ClipboardList } from "lucide-react"
 
@@ -26,6 +26,40 @@ const SettingsPage = () => {
 
   const user = JSON.parse(localStorage.getItem("user") || "{}")
 
+  const [profileImage, setProfileImage] = useState<string | null>(null);
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const savedImage = localStorage.getItem("profileImage");
+
+    if (savedImage) {
+      setProfileImage(savedImage);
+    }
+  }, []);
+
+  const handleImageUpload = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = e.target.files?.[0];
+
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const image = reader.result as string;
+      setProfileImage(image);
+      localStorage.setItem("profileImage", image);
+    };
+    reader.readAsDataURL(file);
+  };
+  const openFilePicker = () => {
+    fileInputRef.current?.click();
+  };
+  const removePhoto = () => {
+    setProfileImage(null);
+    localStorage.removeItem("profileImage");
+  };
   return (
     <div className="p-3 lg:p-6 space-y-6">
       {/* Header */}
@@ -61,18 +95,53 @@ const SettingsPage = () => {
               {/* Avatar */}
               <div className="flex items-center gap-6">
                 <div className="relative">
-                  <div className="w-20 h-20 rounded-full bg-arcadia-moss flex items-center justify-center text-arcadia-cream text-2xl font-bold">
-                    {profile.name.charAt(0)}
-                  </div>
-                  <button className="absolute bottom-0 right-0 w-7 h-7 bg-arcadia-bark rounded-full flex items-center justify-center hover:bg-arcadia-moss transition-colors">
-                    <Camera size={14} className="text-arcadia-cream" />
+                  {profileImage ? (
+                    <img
+                      src={profileImage}
+                      alt={profile.name}
+                      className="w-20 h-20 rounded-full object-cover border-2 border-arcadia-moss"
+                    />
+                  ) : (
+                    <div className="w-20 h-20 rounded-full bg-arcadia-moss flex items-center justify-center text-arcadia-cream text-2xl font-bold">
+                      {profile.name.charAt(0)}
+                    </div>
+                  )}
+
+                  <button
+                    onClick={openFilePicker}
+                    type="button"
+                    className="absolute bottom-0 right-0 w-7 h-7 bg-arcadia-bark rounded-full flex items-center justify-center hover:bg-arcadia-moss transition-colors"
+                  >
+                    <Camera
+                      size={14}
+                      className="text-arcadia-cream"
+                    />
                   </button>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={handleImageUpload}
+                  />
                 </div>
                 <div>
-                  <p className="text-arcadia-cream font-medium">{profile.name}</p>
-                  <p className="text-arcadia-sand text-sm">Super Admin</p>
-                  <button className="text-xs text-arcadia-moss hover:text-arcadia-leaf mt-1">
+                  <p className="text-arcadia-cream font-medium">
+                    {profile.name}
+                  </p>
+                  <p className="text-arcadia-sand text-sm">
+                    Super Admin
+                  </p>
+                  <button
+                    type="button"
+                    onClick={openFilePicker}
+                    className="text-xs text-arcadia-moss hover:text-arcadia-leaf mt-1">
                     Change photo
+                  </button>
+                  <button
+                    onClick={removePhoto}
+                    className="text-xs text-red-400 mt-1 ml-3 bg-arcadia-moss p-3 px-3 py-1 rounded-md">
+                    Remove photo
                   </button>
                 </div>
               </div>
@@ -297,10 +366,10 @@ const SettingsPage = () => {
                         {/* Status badge */}
                         <span
                           className={`text-xs px-3 py-1 rounded-full font-medium ${assignment.status === "Pending"
-                              ? "bg-yellow-500/10 text-yellow-400 border border-yellow-500/20"
-                              : assignment.status === "In Progress"
-                                ? "bg-arcadia-moss/10 text-arcadia-moss border border-arcadia-moss/20"
-                                : "bg-arcadia-bark/50 text-arcadia-sand border border-arcadia-bark"
+                            ? "bg-yellow-500/10 text-yellow-400 border border-yellow-500/20"
+                            : assignment.status === "In Progress"
+                              ? "bg-arcadia-moss/10 text-arcadia-moss border border-arcadia-moss/20"
+                              : "bg-arcadia-bark/50 text-arcadia-sand border border-arcadia-bark"
                             }`}>
                           {assignment.status}
                         </span>

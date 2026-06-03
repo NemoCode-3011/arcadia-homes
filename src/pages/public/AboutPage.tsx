@@ -94,7 +94,7 @@ const AboutPage = () => {
       <div className="bg-arcadia-charcoal">
 
         {/* ── HERO ── */}
-        <section className="relative h-[80vh] flex items-center justify-center overflow-hidden">
+        <section className="relative h-screen flex items-center justify-center overflow-hidden">
           <Parallax speed={-10} className="absolute inset-0 w-full h-full">
             <img
               src={house1}
@@ -146,7 +146,7 @@ const AboutPage = () => {
               <img
                 src={house1}
                 alt="Our story"
-                className="w-full h-[450px] object-cover rounded-2xl"
+                className="w-full h-112.5 object-cover rounded-2xl"
               />
               {/* Floating stat card */}
               <div className="absolute -bottom-4 -left-2 lg:-bottom-6 lg:-left-6 bg-arcadia-stone border border-arcadia-bark rounded-xl p-5 shadow-xl">

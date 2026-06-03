@@ -15,7 +15,7 @@ const DashboardLayout = () => {
       <Sidebar onClose={()=> setSidebarOpen(false)}/>
       </aside>
       <div className="flex flex-col flex-1 overflow-hidden">
-        <Topbar onMenuclick={()=> setSidebarOpen(!sidebarOpen)} />
+        <Topbar onMenuClick={()=> setSidebarOpen(!sidebarOpen)} />
         <main className="flex-1 overflow-y-auto p-3 lg:p-6">
           <Outlet />
         </main>

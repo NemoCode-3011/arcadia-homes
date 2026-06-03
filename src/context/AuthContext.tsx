@@ -2,15 +2,18 @@ import { createContext, useContext, useState } from "react"
 
 interface User {
   email: string
-  role: "super_admin" | "agent"
+  role: "super_admin" | "agent" | "user"
   name: string
 }
 
 interface AuthContextType {
   user: User | null
   isAdminAuthenticated: boolean
+  isUserAuthenticated: boolean
   adminLogin: (user: User) => void
   adminLogout: () => void
+  userLogin: (user: User) => void
+  userLogout: () => void
 }
 
 const AuthContext = createContext<AuthContextType | null>(null)
@@ -34,8 +37,33 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setUser(null)
   }
 
+  const [publicUser, setPublicUser] = useState<User | null>(() => {
+    const stored = localStorage.getItem("publicUser")
+    return stored ? JSON.parse(stored) : null
+  })
+
+  const isUserAuthenticated = !!publicUser
+
+  const userLogin = (userData: User) => {
+    localStorage.setItem("publicUser", JSON.stringify(userData))
+    setPublicUser(userData)
+  }
+
+  const userLogout = () => {
+    localStorage.removeItem("publicUser")
+    setPublicUser(null)
+  }
+
   return (
-    <AuthContext.Provider value={{ user, isAdminAuthenticated, adminLogin, adminLogout }}>
+    <AuthContext.Provider value={{
+      user,
+      isAdminAuthenticated,
+      adminLogin,
+      adminLogout,
+      isUserAuthenticated,
+      userLogin,
+      userLogout
+    }}>
       {children}
     </AuthContext.Provider>
   )

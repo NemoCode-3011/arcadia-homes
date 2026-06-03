@@ -64,7 +64,7 @@ const ContactPage = () => {
       <div className="bg-arcadia-charcoal">
 
         {/* ── HERO ── */}
-        <section className="relative h-[80vh] flex items-center justify-center overflow-hidden">
+        <section className="relative h-screen flex items-center justify-center overflow-hidden">
           <Parallax speed={-10} className="absolute inset-0 w-full h-full">
             <img
               src={house1}

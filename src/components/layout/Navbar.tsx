@@ -45,7 +45,7 @@ const Navbar = () => {
             Listings
           </NavLink>
           <NavLink
-            to="/about-us"
+            to="/aboutus"
             className={({ isActive }) =>
               `text-sm font-medium transition-colors ${isActive ? "text-arcadia-cream" : "text-arcadia-sand hover:text-arcadia-cream"
               }`
@@ -54,7 +54,7 @@ const Navbar = () => {
             About
           </NavLink>
           <NavLink
-            to="/contact-us"
+            to="/contactus"
             className={({ isActive }) =>
               `text-sm font-medium transition-colors ${isActive ? "text-arcadia-cream" : "text-arcadia-sand hover:text-arcadia-cream"
               }`

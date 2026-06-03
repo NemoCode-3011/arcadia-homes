@@ -1,36 +1,106 @@
-import houseimage from "/react/arcadia-homes/src/assets/house-11.jpg"
-import logoimage from "/react/arcadia-homes/src/assets/logo-img-4.png"
-import { UserRound, Mail, Eye, EyeOff } from 'lucide-react'
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
+import { UserRound, Mail, Eye, EyeOff, Loader2 } from "lucide-react"
+import houseimage from "../../assets/house-11.jpg"
+import logoimage from "../../assets/logo-img-4.png"
+
+interface FormData {
+  name: string
+  email: string
+  password: string
+  confirmPassword: string
+}
+
 
 const SignUpPage = () => {
-  const [formData, setFormData] = useState({
+  const navigate = useNavigate()
+
+  const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
   })
-
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirm, setShowConfirm] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
+  const [agreed, setAgreed] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
+    if (error) setError("")
+  }
+
+  // I will also Replace this with API call 
+  // const handleSubmit = async () => {
+  //   setLoading(true)
+  //   try {
+  //     const response = await fetch("/api/auth/signup", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({
+  //         name: formData.name,
+  //         email: formData.email,
+  //         password: formData.password,
+  //       })
+  //     })
+  //     const data = await response.json()
+  //     if (!response.ok) throw new Error(data.message)
+  //     navigate("/signin")
+  //   } catch (err: any) {
+  //     setError(err.message || "Something went wrong")
+  //   } finally {
+  //     setLoading(false)
+  //   }
+  // }
+  
+
+  const handleSubmit = () => {
+    if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
+      setError("Please fill in all fields.")
+      return
+    }
+
+    // if (formData.password !== formData.confirmPassword) {
+    //   setError("Passwords do not match.")
+    //   return
+    // }
+
+    if (formData.password.length < 8) {
+      setError("Password must be at least 8 characters.")
+      return
+    }
+
+    if (!agreed) {
+      setError("Please agree to the Terms & Conditions.")
+      return
+    }
+
+    setLoading(true)
+    setError("")
+
+    // simulate network delay — remove when API is ready
+    setTimeout(() => {
+      setLoading(false)
+      navigate("/signin")
+    }, 800)
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") handleSubmit()
   }
 
   return (
     <div className="flex h-screen bg-arcadia-charcoal">
-      {/* Left side — image */}
+      {/* Left — image */}
       <div className="hidden lg:block basis-1/2 relative overflow-hidden">
         <img
           src={houseimage}
           alt="Arcadia Property"
           className="w-full h-full object-cover"
         />
-        {/* Overlay */}
         <div className="absolute inset-0 bg-linear-to-r from-arcadia-charcoal/40 to-transparent" />
-        {/* Quote */}
         <div className="absolute bottom-10 left-10 right-10">
           <p className="text-arcadia-cream/80 text-lg font-light italic leading-relaxed">
             "Find your perfect sanctuary in nature."
@@ -41,10 +111,9 @@ const SignUpPage = () => {
         </div>
       </div>
 
-      {/* Right side — form */}
-      <div className="flex flex-1 items-center justify-center p-8 overflow-y-auto ">
-        <div className="w-full max-w-md space-y-8 mt-50">
-
+      {/* form cont */}
+      <div className="flex flex-1 items-center justify-center p-8 overflow-y-auto">
+        <div className="w-full max-w-md space-y-8">
           {/* Logo */}
           <div className="flex flex-col items-center">
             <img
@@ -56,7 +125,6 @@ const SignUpPage = () => {
               MODERN NATURE RESIDENCES
             </p>
           </div>
-
           {/* Heading */}
           <div className="space-y-1">
             <h1 className="text-2xl font-semibold text-arcadia-cream">
@@ -66,7 +134,12 @@ const SignUpPage = () => {
               Sign up to get started with Arcadia Homes
             </p>
           </div>
-
+          {/* Error */}
+          {error && (
+            <div className="px-4 py-3 rounded-lg bg-red-900/30 border border-red-800 text-red-400 text-sm">
+              {error}
+            </div>
+          )}
           {/* Form */}
           <div className="space-y-5">
 
@@ -82,6 +155,7 @@ const SignUpPage = () => {
                   placeholder="Enter your full name"
                   value={formData.name}
                   onChange={handleChange}
+                  onKeyDown={handleKeyDown}
                   className="w-full h-11 px-4 bg-transparent border border-arcadia-bark rounded-lg text-arcadia-cream placeholder:text-arcadia-bark focus:outline-none focus:border-arcadia-moss transition-colors pr-12"
                 />
                 <UserRound size={18} className="absolute right-3 top-1/2 -translate-y-1/2 text-arcadia-sand/40" />
@@ -100,6 +174,7 @@ const SignUpPage = () => {
                   placeholder="Enter your email"
                   value={formData.email}
                   onChange={handleChange}
+                  onKeyDown={handleKeyDown}
                   className="w-full h-11 px-4 bg-transparent border border-arcadia-bark rounded-lg text-arcadia-cream placeholder:text-arcadia-bark focus:outline-none focus:border-arcadia-moss transition-colors pr-12"
                 />
                 <Mail size={18} className="absolute right-3 top-1/2 -translate-y-1/2 text-arcadia-sand/40" />
@@ -118,6 +193,7 @@ const SignUpPage = () => {
                   placeholder="Enter your password"
                   value={formData.password}
                   onChange={handleChange}
+                  onKeyDown={handleKeyDown}
                   className="w-full h-11 px-4 bg-transparent border border-arcadia-bark rounded-lg text-arcadia-cream placeholder:text-arcadia-bark focus:outline-none focus:border-arcadia-moss transition-colors pr-12"
                 />
                 <button
@@ -142,6 +218,7 @@ const SignUpPage = () => {
                   placeholder="Confirm your password"
                   value={formData.confirmPassword}
                   onChange={handleChange}
+                  onKeyDown={handleKeyDown}
                   className="w-full h-11 px-4 bg-transparent border border-arcadia-bark rounded-lg text-arcadia-cream placeholder:text-arcadia-bark focus:outline-none focus:border-arcadia-moss transition-colors pr-12"
                 />
                 <button
@@ -158,6 +235,8 @@ const SignUpPage = () => {
             <div className="flex items-start gap-2">
               <input
                 type="checkbox"
+                checked={agreed}
+                onChange={(e) => setAgreed(e.target.checked)}
                 className="mt-1 size-4 accent-arcadia-moss cursor-pointer"
               />
               <p className="text-sm text-arcadia-sand">
@@ -171,9 +250,18 @@ const SignUpPage = () => {
             {/* Submit */}
             <button
               type="button"
-              className="w-full py-3 rounded-lg bg-arcadia-moss text-arcadia-cream font-medium hover:bg-arcadia-leaf transition-colors"
+              onClick={handleSubmit}
+              disabled={loading}
+              className="w-full py-3 rounded-lg bg-arcadia-moss text-arcadia-cream font-medium hover:bg-arcadia-leaf transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
-              Sign Up
+              {loading ? (
+                <>
+                  <Loader2 size={18} className="animate-spin" />
+                  Creating account...
+                </>
+              ) : (
+                "Sign Up"
+              )}
             </button>
 
             {/* Sign in link */}
@@ -181,12 +269,10 @@ const SignUpPage = () => {
               Already have an account?{" "}
               <Link
                 to="/signin"
-                className="text-arcadia-cream underline underline-offset-2 hover:text-arcadia-leaf transition-colors"
-              >
+                className="text-arcadia-cream underline underline-offset-2 hover:text-arcadia-leaf transition-colors">
                 Sign In
-              </Link>
+               </Link>
             </p>
-
           </div>
         </div>
       </div>

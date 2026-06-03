@@ -21,7 +21,7 @@ const Sidebar = ({ onClose }: SideBarProp) => {
   const navItems = [
     {
       title: "Dashboard",
-      path: "/admin-dashboard",
+      path: "/dashboard",
       icon: LayoutDashboard,
       roles: ["super_admin", "agent"],
     },
@@ -72,7 +72,6 @@ const Sidebar = ({ onClose }: SideBarProp) => {
 
   return (
     <aside className="w-64 h-screen flex flex-col border-r border-arcadia-sand/20 bg-arcadia-stone relative overflow-hidden">
-
       {/* Subtle background texture */}
       <div
         className="absolute inset-0 opacity-5 pointer-events-none"

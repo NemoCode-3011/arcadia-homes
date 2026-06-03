@@ -19,6 +19,8 @@ import LoadingScreen from "./components/ui/LoadingScreen";
 import { useState } from "react";
 import ProtectedRoute from "./components/layout/ProtectedRoute"
 import { AuthProvider } from "./context/AuthContext"
+import PublicProtectedRoute from "./components/layout/PublicProtectedRoutes"
+import ScrollToTop from "./components/ui/ScrollTop"
 const App = () => {
   const [loading, setLoading] = useState(true)
 
@@ -28,15 +30,21 @@ const App = () => {
 
   return (
     <AuthProvider>
+      <ScrollToTop />
       <Routes>
-
-        {/* Public routes */}
+        {/* accessible public routes */}
         <Route element={<PublicDashboardLayout />}>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/listings" element={<ListingsPage />} />
-          <Route path="/listings/:id" element={<ListingsDetails />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/aboutus" element={<AboutPage />} />
+          <Route path="/contactus" element={<ContactPage />} />
+        </Route>
+
+        {/* Protected public routes, tou must sign up first */}
+        <Route element={<PublicProtectedRoute />}>
+          <Route element={<PublicDashboardLayout />}>
+            <Route path="/listings" element={<ListingsPage />} />
+            <Route path="/listings/:id" element={<ListingsDetails />} />
+          </Route>
         </Route>
 
         {/* Public auth */}
@@ -57,10 +65,8 @@ const App = () => {
             <Route path="/agents" element={<ManageAgentPage />} />
           </Route>
         </Route>
-
       </Routes>
     </AuthProvider>
   )
 }
-
 export default App
