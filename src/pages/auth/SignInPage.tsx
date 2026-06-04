@@ -42,8 +42,7 @@ const SignInPage = () => {
   //   setLoading(true)
   //   try {
   //     const response = await fetch("/api/auth/signin", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
+  //   
   //       body: JSON.stringify(formData)
   //     })
   //     const data = await response.json()
@@ -94,7 +93,6 @@ const SignInPage = () => {
 
   return (
     <div className="flex h-screen bg-arcadia-charcoal">
-
       {/* Left — image */}
       <div className="hidden lg:block basis-1/2">
         <img
@@ -103,7 +101,6 @@ const SignInPage = () => {
           className="w-full h-full object-cover"
         />
       </div>
-
       {/* form cont*/}
       <div className="flex flex-1 items-center justify-center p-8">
         <div className="w-full max-w-md space-y-8">
