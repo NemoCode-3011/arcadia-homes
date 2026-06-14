@@ -51,8 +51,8 @@ const Footer = () => {
             {[
               { label: "Home", path: "/" },
               { label: "Listings", path: "/listings" },
-              { label: "About", path: "/about" },
-              { label: "Contact", path: "/contact" },
+              { label: "About", path: "/aboutus" },
+              { label: "Contact", path: "/contactus" },
             ].map((link) => (
               <button
                 key={link.label}
