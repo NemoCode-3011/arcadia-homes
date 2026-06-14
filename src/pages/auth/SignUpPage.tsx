@@ -113,7 +113,7 @@ const SignUpPage = () => {
 
       {/* form cont */}
       <div className="flex flex-1 items-center justify-center p-8 overflow-y-auto">
-        <div className="w-full max-w-md space-y-8">
+        <div className="w-full h-full max-w-md space-y-8">
           {/* Logo */}
           <div className="flex flex-col items-center">
             <img
