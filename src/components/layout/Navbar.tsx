@@ -93,8 +93,8 @@ const Navbar = () => {
         <div className="lg:hidden bg-arcadia-charcoal px-6 py-4 space-y-4 border-t border-arcadia-bark">
           <NavLink to="/" onClick={() => setMenuOpen(false)} className="block text-arcadia-sand hover:text-arcadia-cream text-sm font-medium">Home</NavLink>
           <NavLink to="/listings" onClick={() => setMenuOpen(false)} className="block text-arcadia-sand hover:text-arcadia-cream text-sm font-medium">Listings</NavLink>
-          <NavLink to="/about-us" onClick={() => setMenuOpen(false)} className="block text-arcadia-sand hover:text-arcadia-cream text-sm font-medium">About</NavLink>
-          <NavLink to="/contact-us" onClick={() => setMenuOpen(false)} className="block text-arcadia-sand hover:text-arcadia-cream text-sm font-medium">Contact</NavLink>
+          <NavLink to="/aboutus" onClick={() => setMenuOpen(false)} className="block text-arcadia-sand hover:text-arcadia-cream text-sm font-medium">About</NavLink>
+          <NavLink to="/contactus" onClick={() => setMenuOpen(false)} className="block text-arcadia-sand hover:text-arcadia-cream text-sm font-medium">Contact</NavLink>
           <hr className="border-arcadia-bark" />
           <button onClick={() => { navigate("/signin"); setMenuOpen(false) }} className="block text-arcadia-sand hover:text-arcadia-cream text-sm font-medium">Sign In</button>
           <button onClick={() => { navigate("/signup"); setMenuOpen(false) }} className="w-full py-2 rounded-lg bg-arcadia-moss text-arcadia-cream text-sm font-medium">Get Started</button>
