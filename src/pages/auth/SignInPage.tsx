@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
 import { Eye, EyeOff, Loader2 } from "lucide-react"
 import { useAuth } from "../../context/AuthContext"
-import houseimage from "../../assets/house-4.jpg"
+import houseimage2 from "../../assets/house27.jpg"
 import logoimage from "../../assets/logo-img-5.png"
 
 interface FormData {
@@ -96,7 +96,7 @@ const SignInPage = () => {
       {/* Left — image */}
       <div className="hidden lg:block basis-1/2">
         <img
-          src={houseimage}
+          src={houseimage2}
           alt="Arcadia Property"
           className="w-full h-full object-cover"
         />

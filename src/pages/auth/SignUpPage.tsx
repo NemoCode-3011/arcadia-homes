@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
 import { UserRound, Mail, Eye, EyeOff, Loader2 } from "lucide-react"
-import houseimage from "../../assets/house-11.jpg"
+import houseimage1 from "../../assets/house28.jpg"
 import logoimage from "../../assets/logo-img-4.png"
 
 interface FormData {
@@ -96,7 +96,7 @@ const SignUpPage = () => {
       {/* Left — image */}
       <div className="hidden lg:block basis-1/2 relative overflow-hidden">
         <img
-          src={houseimage}
+          src={houseimage1}
           alt="Arcadia Property"
           className="w-full h-full object-cover"
         />

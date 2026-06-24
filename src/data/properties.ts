@@ -22,6 +22,7 @@ export const properties = [
     bathrooms: 3,
     description: "A stunning luxury villa nesled in the heart of Victoria Island. Features modern architecture, spacious rooms, en-suite bathrooms and premmium finishes throughout",
     agent: {
+      id: "1",
       name: "Vivian A.",
       phone: "08149798764",
       email: "adeniyitemilade192@gmail.com"
@@ -39,6 +40,7 @@ export const properties = [
     bathrooms: 2,
     description: "A cozy modern bungalow located in Lekki with spacious interiors, natural lighting, and a peaceful residential setting.",
     agent: {
+       id: "2",
       name: "Lekan A.",
       phone: "0819876545",
       email: "OlalekanActor@gmail.com"
@@ -56,6 +58,7 @@ export const properties = [
     bathrooms: 4,
     description: "A sleek modern duplex located in Ikoyi, featuring elegant finishes, open-concept living spaces, and contemporary architecture.",
     agent: {
+       id: "3",
       name: "Hannah O.",
       phone: "07072754742",
       email: "OlajideHannah@gmail.com"
@@ -73,6 +76,7 @@ export const properties = [
     bathrooms: 4,
     description: "A stylish semi-detached duplex located at FESTAC, offering comfort, privacy, and a functional family-friendly layout.",
     agent: {
+       id: "4",
       name: "Israel J.",
       phone: "09059896514",
       email: "IsraelJohnson567@gmail.com"
@@ -89,6 +93,7 @@ export const properties = [
     bathrooms: 6,
     description: "A grand colonial mansion located at Jericho, with timeless architecture, luxurious interiors, and expansive living spaces.",
     agent: {
+       id: "5",
       name: "Mark B.",
       phone: "08099181771",
       email: "MarkBlackwell99@gmail.com"
@@ -106,6 +111,7 @@ export const properties = [
     bathrooms: 3,
     description: "A modern semi-detatched duplex located at FESTAC with stylish interiors, smart space utilization, and a vibrant neighborhood atmosphere.",
     agent: {
+       id: "6",
       name: "Daniel F.H",
       phone: "07074530813",
       email: "DanielHarryF087@gmail.com"
@@ -123,6 +129,7 @@ export const properties = [
     bathrooms: 2,
     description: "A premium apartment building located at Ikoyi, designed for modern urban living with spacious units and quality amenities.",
     agent: {
+       id: "7",
       name: "Emmanuel O.",
       phone: "09020079376",
       email: "EmmaOla768@gmail.com"
@@ -139,6 +146,7 @@ export const properties = [
     bathrooms: 5,
     description: "An exquisite luxury mansion located at Lekki, featuring sophisticated design, vast interiors, and premium comfort.",
     agent: {
+       id: "8",
       name: "Modupe D.",
       phone: "08083899077",
       email: "EllaMeo909@gmail.com"
@@ -156,6 +164,7 @@ export const properties = [
     bathrooms: 4,
     description: "A beautifully crafted fully detached duplex ocated at Jericho, offering maximum privacy, elegance, and spacious living.",
     agent: {
+       id: "9",
       name: "Mikhaeel K.",
       phone: "09048593203",
       email: "KareemMK454@gmail.com"
@@ -173,6 +182,7 @@ export const properties = [
     bathrooms: 4,
     description: "A luxurious penthouse apartment located at Banana Island, with panoramic views, refined finishes, and exclusive living spaces.",
     agent: {
+       id: "10",
       name: "Ishola O.",
       phone: "08081486515",
       email: "OloyedeIshola@gmail.com"

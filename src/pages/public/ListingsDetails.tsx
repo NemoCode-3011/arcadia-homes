@@ -1,11 +1,85 @@
+import { useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { properties } from "../../data/properties"
-import { ArrowLeft, MapPin, BedDouble, Bath, Tag } from "lucide-react"
+import { ArrowLeft, MapPin, BedDouble, Bath, Tag, Loader2, X } from "lucide-react"
+import { messages } from "../../data/messages"
 
 const ListingsDetails = () => {
   const { id } = useParams()
   const navigate = useNavigate()
   const property = properties.find((p) => p.id === id)
+
+  const [showEnquiryModal, setShowEnquiryModal] = useState(false)
+  const [enquiryType, setEnquiryType] = useState<"viewing" | "message">("viewing")
+  const [enquiryData, setEnquiryData] = useState({ name: "", email: "", phone: "", message: "" })
+  const [loading, setLoading] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setEnquiryData({ ...enquiryData, [e.target.name]: e.target.value })
+  }
+
+  const openModal = (type: "viewing" | "message") => {
+    setEnquiryType(type)
+    setSubmitted(false)
+    setShowEnquiryModal(true)
+  }
+
+  // ─── TODO: Replace with API call ──────────────────
+  // const handleEnquirySubmit = async () => {
+  //   setLoading(true)
+  //   try {
+  //     const response = await fetch("/api/messages", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({
+  //         ...enquiryData,
+  //         propertyId: property?.id,
+  //         agentId: property?.agent?.id,
+  //       })
+  //     })
+  //     if (!response.ok) throw new Error("Failed to send enquiry")
+  //     setSubmitted(true)
+  //   } catch (err) {
+  //     console.error(err)
+  //   } finally {
+  //     setLoading(false)
+  //   }
+  // }
+  // ───────────────────────────────────────────────────
+
+  const handleEnquirySubmit = () => {
+    if (!property) return
+    if (!enquiryData.name || !enquiryData.email || !enquiryData.message) return
+
+    setLoading(true)
+
+    setTimeout(() => {
+      // this automatically inherits the agent from the property —
+      // no Super Admin involvement needed, it goes straight to the listing agent
+      const newMessage = {
+        id: Date.now().toString(),
+        senderName: enquiryData.name,
+        senderEmail: enquiryData.email,
+        propertyId: property.id,
+        propertyName: property.houseType,
+        location: property.location,
+        agentId: property.agent.id,
+        message:
+          enquiryType === "viewing"
+            ? `[Viewing Request] ${enquiryData.message}`
+            : enquiryData.message,
+        isRead: false,
+        createdAt: "Just now",
+      }
+
+      console.log("New property enquiry:", newMessage)
+      messages.unshift(newMessage) // temporary — replaced by API later
+
+      setLoading(false)
+      setSubmitted(true)
+    }, 800)
+  }
 
   if (!property) {
     return (
@@ -15,13 +89,15 @@ const ListingsDetails = () => {
           <p className="text-arcadia-cream font-medium">Property not found</p>
           <button
             onClick={() => navigate("/listings")}
-            className="text-sm text-arcadia-moss hover:text-arcadia-leaf transition-colors">
+            className="text-sm text-arcadia-moss hover:text-arcadia-leaf transition-colors"
+          >
             Back to listings
           </button>
         </div>
       </div>
     )
   }
+
   return (
     <div className="min-h-screen bg-arcadia-charcoal">
 
@@ -32,25 +108,22 @@ const ListingsDetails = () => {
           alt={property.houseType}
           className="w-full h-full object-cover"
         />
-        {/* Overlay */}
         <div className="absolute inset-0 bg-linear-to-t from-arcadia-charcoal via-arcadia-charcoal/20 to-transparent" />
 
-        {/* Back button over image */}
         <button
           onClick={() => navigate("/listings")}
-          className="absolute top-25 left-6 flex items-center gap-2 px-4 py-2 rounded-lg bg-arcadia-charcoal/60 backdrop-blur-sm border border-arcadia-bark text-arcadia-cream text-sm hover:bg-arcadia-charcoal/80 transition-colors">
+          className="absolute top-25 left-6 flex items-center gap-2 px-4 py-2 rounded-lg bg-arcadia-charcoal/60 backdrop-blur-sm border border-arcadia-bark text-arcadia-cream text-sm hover:bg-arcadia-charcoal/80 transition-colors"
+        >
           <ArrowLeft size={15} />
           Back to Listings
         </button>
 
-        {/* Status badge over image */}
         <div className="absolute top-30 right-6">
           <span className="px-3 py-1.5 rounded-full bg-arcadia-moss text-arcadia-cream text-xs font-medium">
             {property.status}
           </span>
         </div>
 
-        {/* Property title over image bottom */}
         <div className="absolute bottom-8 left-6 right-6">
           <h1 className="text-3xl lg:text-4xl font-semibold text-arcadia-cream">
             {property.houseType}
@@ -69,7 +142,6 @@ const ListingsDetails = () => {
           {/* Left — details */}
           <div className="lg:col-span-2 space-y-8">
 
-            {/* Price + quick stats */}
             <div className="flex flex-wrap items-center gap-6">
               <p className="text-3xl font-semibold text-arcadia-leaf">
                 ₦{property.price.toLocaleString()}
@@ -92,7 +164,6 @@ const ListingsDetails = () => {
 
             <hr className="border-arcadia-bark" />
 
-            {/* Description */}
             <div className="space-y-3">
               <h2 className="text-arcadia-cream font-semibold text-lg">
                 About this property
@@ -104,7 +175,6 @@ const ListingsDetails = () => {
 
             <hr className="border-arcadia-bark" />
 
-            {/* Property details grid */}
             <div className="space-y-3">
               <h2 className="text-arcadia-cream font-semibold text-lg">
                 Property Details
@@ -142,7 +212,6 @@ const ListingsDetails = () => {
                 Contact Agent
               </h3>
 
-              {/* Agent info */}
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-xl bg-arcadia-moss/20 border border-arcadia-moss/30 flex items-center justify-center text-arcadia-moss font-bold text-lg">
                   {property.agent.name.charAt(0)}
@@ -159,7 +228,6 @@ const ListingsDetails = () => {
 
               <hr className="border-arcadia-bark" />
 
-              {/* Contact details */}
               <div className="space-y-2">
                 <p className="text-arcadia-sand text-sm">
                   📞 {property.agent.phone}
@@ -171,17 +239,22 @@ const ListingsDetails = () => {
 
               <hr className="border-arcadia-bark" />
 
-              {/* CTA buttons */}
               <div className="space-y-3">
-                <button className="w-full py-3 rounded-lg bg-arcadia-moss text-arcadia-cream text-sm font-medium hover:bg-arcadia-leaf transition-colors">
+                <button
+                  onClick={() => setShowEnquiryModal(true)}
+                  className="w-full py-3 rounded-lg bg-arcadia-moss text-arcadia-cream font-medium hover:bg-arcadia-leaf transition-colors"
+                >
                   Schedule Viewing
                 </button>
-                <button className="w-full py-3 rounded-lg bg-arcadia-bark text-arcadia-cream text-sm font-medium hover:bg-arcadia-stone transition-colors">
+                <button
+                  onClick={() => openModal("message")}
+                  className="w-full py-3 rounded-lg bg-arcadia-bark text-arcadia-cream text-sm font-medium hover:bg-arcadia-stone transition-colors"
+                >
                   Send Message
                 </button>
               </div>
             </div>
-            {/* Similar properties nudge */}
+
             <button
               onClick={() => navigate("/listings")}
               className="w-full py-3 rounded-lg border border-arcadia-bark text-arcadia-sand text-sm hover:text-arcadia-cream hover:border-arcadia-sand transition-colors"
@@ -192,6 +265,126 @@ const ListingsDetails = () => {
 
         </div>
       </div>
+
+      {/* ─── Enquiry Modal ─── */}
+      {showEnquiryModal && (
+        <div
+          className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center px-4"
+          onClick={() => setShowEnquiryModal(false)}
+        >
+          <div
+            className="w-full max-w-md bg-arcadia-stone rounded-2xl shadow-2xl p-6 space-y-5"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex justify-between items-center border-b border-arcadia-bark pb-4">
+              <h2 className="text-xl font-semibold text-arcadia-cream">
+                {enquiryType === "viewing" ? "Schedule a Viewing" : "Message the Agent"}
+              </h2>
+              <button
+                onClick={() => setShowEnquiryModal(false)}
+                className="text-arcadia-sand hover:text-arcadia-cream"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {submitted ? (
+              <div className="text-center py-6 space-y-3">
+                <p className="text-4xl">✅</p>
+                <p className="text-arcadia-cream font-medium">
+                  Sent to {property.agent.name}!
+                </p>
+                <p className="text-arcadia-sand text-sm">
+                  They'll get back to you about {property.houseType} shortly.
+                </p>
+                <button
+                  onClick={() => setShowEnquiryModal(false)}
+                  className="text-sm text-arcadia-moss hover:text-arcadia-leaf transition-colors"
+                >
+                  Close
+                </button>
+              </div>
+            ) : (
+              <>
+                <p className="text-arcadia-sand text-sm">
+                  Regarding: <span className="text-arcadia-leaf">{property.houseType}</span> — {property.location}
+                </p>
+
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-arcadia-sand">Full Name</label>
+                    <input
+                      name="name"
+                      type="text"
+                      value={enquiryData.name}
+                      onChange={handleChange}
+                      placeholder="Enter your name"
+                      className="w-full h-11 px-4 bg-transparent border border-arcadia-bark rounded-lg text-arcadia-cream placeholder:text-arcadia-bark focus:outline-none focus:border-arcadia-moss"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-arcadia-sand">Email</label>
+                    <input
+                      name="email"
+                      type="email"
+                      value={enquiryData.email}
+                      onChange={handleChange}
+                      placeholder="Enter your email"
+                      className="w-full h-11 px-4 bg-transparent border border-arcadia-bark rounded-lg text-arcadia-cream placeholder:text-arcadia-bark focus:outline-none focus:border-arcadia-moss"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-arcadia-sand">Phone</label>
+                    <input
+                      name="phone"
+                      type="tel"
+                      value={enquiryData.phone}
+                      onChange={handleChange}
+                      placeholder="Enter your phone number"
+                      className="w-full h-11 px-4 bg-transparent border border-arcadia-bark rounded-lg text-arcadia-cream placeholder:text-arcadia-bark focus:outline-none focus:border-arcadia-moss"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-arcadia-sand">Message</label>
+                    <textarea
+                      name="message"
+                      rows={3}
+                      value={enquiryData.message}
+                      onChange={handleChange}
+                      placeholder={
+                        enquiryType === "viewing"
+                          ? "Preferred date and time for viewing..."
+                          : "What would you like to know?"
+                      }
+                      className="w-full px-4 py-3 bg-transparent border border-arcadia-bark rounded-lg text-arcadia-cream placeholder:text-arcadia-bark focus:outline-none focus:border-arcadia-moss resize-none"
+                    />
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={handleEnquirySubmit}
+                    disabled={loading}
+                    className="w-full py-3 rounded-lg bg-arcadia-moss text-arcadia-cream font-medium hover:bg-arcadia-leaf transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  >
+                    {loading ? (
+                      <>
+                        <Loader2 size={18} className="animate-spin" />
+                        Sending...
+                      </>
+                    ) : (
+                      "Send"
+                    )}
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+
     </div>
   )
 }

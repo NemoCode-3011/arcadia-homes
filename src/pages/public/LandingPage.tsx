@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom"
 import { ParallaxProvider, Parallax } from "react-scroll-parallax"
 import { properties } from "../../data/properties"
 import PropertyCard from "../../components/ui/PropertyCard"
-import house1 from "../../assets/house-12.jpg"
+import house4 from "../../assets/house23.jpg"
 
 const LandingPage = () => {
   const navigate = useNavigate()
@@ -16,7 +16,7 @@ const LandingPage = () => {
           {/* Background Image with Parallax */}
           <Parallax speed={-15} className="absolute inset-0 w-full h-full">
             <img
-              src={house1}
+              src={house4}
               alt="Arcadia"
               className="w-full h-full object-cover"
             />
@@ -106,7 +106,7 @@ const LandingPage = () => {
           {/* Background with Parallax */}
           <Parallax speed={-10} className="absolute inset-0">
             <img
-              src={house1}
+              src={house4}
               alt="Why Arcadia"
               className="w-full h-full object-cover"
             />
@@ -190,7 +190,7 @@ const LandingPage = () => {
           {/* Background with Parallax */}
           <Parallax speed={-8} className="absolute inset-0">
             <img
-              src={house1}
+              src={house4}
               alt="CTA"
               className="w-full h-full object-cover"
             />

@@ -2,7 +2,7 @@ import { useState } from "react"
 import { ParallaxProvider, Parallax } from "react-scroll-parallax"
 import house1 from "../../assets/house-12.jpg"
 import { Mail, Phone, MapPin, Send, Clock } from "lucide-react"
-
+import { generalEnquiries, type GeneralEnquiry } from "../../data/generalEnquiries"
 const ContactPage = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -23,10 +23,34 @@ const ContactPage = () => {
   }
 
   const handleSubmit = () => {
-    if (!formData.name || !formData.email || !formData.message) return
+    if (!formData.name || !formData.email || !formData.message || !formData.enquiry) return
 
     setLoading(true)
+
     setTimeout(() => {
+      // map your existing dropdown values to Buy/Rent/Sell
+      const intentMap: Record<string, "Buy" | "Rent" | "Sell"> = {
+        buying: "Buy",
+        renting: "Rent",
+        viewing: "Buy",       // scheduling a viewing is closest to "Buy" intent
+        investment: "Buy",
+        other: "Buy",
+      }
+      const newEnquiry: GeneralEnquiry = {
+        id: Date.now().toString(),
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        intent: intentMap[formData.enquiry] || "Buy",
+        message: `${formData.subject ? `[${formData.subject}] ` : ""}${formData.message}`,
+        assignedAgentId: null,   // ← Super Admin assigns this later
+        createdAt: "Just now",
+        isRead: false,
+      }
+      // for now, log it — once backend is ready this becomes a POST request
+      console.log("New general enquiry submitted:", newEnquiry)
+      generalEnquiries.unshift(newEnquiry) // adds to the top of the array temporarily
+
       setLoading(false)
       setSubmitted(true)
     }, 1000)
