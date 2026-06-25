@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { Eye, EyeOff, Loader2 } from "lucide-react"
 import { useAuth } from "../../context/AuthContext"
 import logo from "../../assets/logo-img-2.png"
-import house from "../../assets/housee.jpg"
+import house6  from "../../assets/house21.jpg"
 
 interface FormData {
   email: string
@@ -104,7 +104,7 @@ const AdminSignInPage = () => {
       {/* Left — image */}
       <div className="hidden lg:block basis-1/2 relative overflow-hidden">
         <img
-          src={house}
+          src={house6}
           alt="Arcadia Property"
           className="w-full h-full object-cover"
         />
