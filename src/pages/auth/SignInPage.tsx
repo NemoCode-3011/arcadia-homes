@@ -2,7 +2,6 @@ import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
 import { Eye, EyeOff, Loader2 } from "lucide-react"
 import { useAuth } from "../../context/AuthContext"
-import houseimage2 from "../../assets/house27.jpg"
 import houseimage3 from "../../assets/house29.jpg"
 import logoimage from "../../assets/logo-img-5.png"
 

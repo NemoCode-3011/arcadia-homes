@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom"
 import house4 from "../../assets/house28.jpg"
-import house5 from "../../assets/house30.jpg"
 import house6  from "../../assets/house31.jpg"
 import { ParallaxProvider, Parallax } from "react-scroll-parallax"
 import image1 from "../../assets/t-1.jpg"
