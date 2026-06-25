@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom"
 import { Eye, EyeOff, Loader2 } from "lucide-react"
 import { useAuth } from "../../context/AuthContext"
 import houseimage2 from "../../assets/house27.jpg"
+import houseimage3 from "../../assets/house29.jpg"
 import logoimage from "../../assets/logo-img-5.png"
 
 interface FormData {
@@ -13,6 +14,7 @@ interface FormData {
 // Using Fake-hardcoded users, I will replace with API call later
 const fakeUsers = [
   {
+    id: "1",
     email: "user@arcadia.com",
     password: "user123",
     role: "user" as const,
@@ -81,7 +83,7 @@ const SignInPage = () => {
         return
       }
 
-      userLogin({ email: match.email, role: match.role, name: match.name })
+      userLogin({id: match.id, email: match.email, role: match.role, name: match.name })
       setLoading(false)
       navigate("/")
     }, 800)
@@ -96,7 +98,7 @@ const SignInPage = () => {
       {/* Left — image */}
       <div className="hidden lg:block basis-1/2">
         <img
-          src={houseimage2}
+          src={houseimage3}
           alt="Arcadia Property"
           className="w-full h-full object-cover"
         />

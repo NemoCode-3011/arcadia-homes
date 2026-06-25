@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { ParallaxProvider, Parallax } from "react-scroll-parallax"
-import house1 from "../../assets/house-12.jpg"
+import house4 from "../../assets/house24.jpg"
 import { Mail, Phone, MapPin, Send, Clock } from "lucide-react"
 import { generalEnquiries, type GeneralEnquiry } from "../../data/generalEnquiries"
 const ContactPage = () => {
@@ -91,7 +91,7 @@ const ContactPage = () => {
         <section className="relative h-screen flex items-center justify-center overflow-hidden">
           <Parallax speed={-10} className="absolute inset-0 w-full h-full">
             <img
-              src={house1}
+              src={house4}
               alt="Contact Arcadia"
               className="w-full h-full object-cover"
             />

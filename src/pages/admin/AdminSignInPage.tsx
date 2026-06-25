@@ -14,13 +14,14 @@ interface FormData {
 const fakeAdminUsers = [
   
   {
+    id: "super1",
     email: "superadmin@arcadia.com",
     password: "admin123",
     role: "super_admin" as const,
     name: "Temilade A.",
   },
 
-  {
+  { id: "1",
     email: "agent@arcadia.com",
     password: "agent123",
     role: "agent" as const,
@@ -87,7 +88,7 @@ const AdminSignInPage = () => {
         return
       }
 
-      adminLogin({ email: match.email, role: match.role, name: match.name })
+      adminLogin({id: match.id, email: match.email, role: match.role, name: match.name })
       setLoading(false)
       navigate("/dashboard")
     }, 800)

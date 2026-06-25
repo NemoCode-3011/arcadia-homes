@@ -216,7 +216,7 @@ const LandingPage = () => {
                 Explore Properties
               </button>
               <button
-                onClick={() => navigate("/contact")}
+                onClick={() => navigate("/contactus")}
                 className="px-8 py-3 rounded-lg border border-arcadia-cream text-arcadia-cream font-medium hover:bg-arcadia-cream/10 transition-colors"
               >
                 Contact Us

@@ -1,6 +1,7 @@
 import { createContext, useContext, useState } from "react"
 
 interface User {
+  id: string
   email: string
   role: "super_admin" | "agent" | "user"
   name: string

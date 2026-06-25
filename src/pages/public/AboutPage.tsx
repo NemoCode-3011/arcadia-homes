@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom"
-import house1 from "../../assets/house-12.jpg"
+import house4 from "../../assets/house28.jpg"
+import house5 from "../../assets/house30.jpg"
+import house6  from "../../assets/house31.jpg"
 import { ParallaxProvider, Parallax } from "react-scroll-parallax"
 import image1 from "../../assets/t-1.jpg"
 import image2 from "../../assets/t-2.jpg"
@@ -96,7 +98,7 @@ const AboutPage = () => {
         <section className="relative h-screen flex items-center justify-center overflow-hidden">
           <Parallax speed={-10} className="absolute inset-0 w-full h-full">
             <img
-              src={house1}
+              src={house4}
               alt="Arcadia"
               className="w-full h-full object-cover"
             />
@@ -143,7 +145,7 @@ const AboutPage = () => {
             {/* Image */}
             <div className="relative">
               <img
-                src={house1}
+                src={house6}
                 alt="Our story"
                 className="w-full h-112.5 object-cover rounded-2xl"
               />
@@ -159,7 +161,7 @@ const AboutPage = () => {
         <section className="relative py-24 px-6 overflow-hidden">
           <Parallax speed={-8} className="absolute inset-0">
             <img
-              src={house1}
+              src={house4}
               alt="Mission"
               className="w-full h-full object-cover"
             />
@@ -304,7 +306,7 @@ const AboutPage = () => {
         <section className="relative py-28 px-6 overflow-hidden">
           <Parallax speed={-8} className="absolute inset-0">
             <img
-              src={house1}
+              src={house4}
               alt="CTA"
               className="w-full h-full object-cover"
             />
