@@ -1,7 +1,5 @@
 import { useNavigate } from "react-router-dom"
-import { MapPin } from 'lucide-react';
-import { Bath } from 'lucide-react';
-import { Bed } from 'lucide-react';
+import { MapPin, Bath, Bed, Home } from 'lucide-react';
 
 interface PropertyCardProps {
   image: string
@@ -23,7 +21,23 @@ const PropertyCard = ({ image, status, houseType, location, price, bedrooms, bat
       className="rounded-xl overflow-hidden bg-arcadia-stone cursor-pointer hover:scale-105 transition-transform"
       onClick={() => navigate(linkTo ?? `/listings/${id}`)}  // defaults to public if not passed
     >
-      <img src={image} alt={houseType} className="w-full h-48 object-cover" />
+      <div className="w-full h-48 bg-arcadia-bark/40 flex items-center justify-center overflow-hidden">
+        {image ? (
+          <img
+            src={image}
+            alt={houseType}
+            className="w-full h-48 object-cover"
+            onError={(e) => {
+              e.currentTarget.style.display = "none"
+              e.currentTarget.parentElement?.querySelector(".image-fallback")?.classList.remove("hidden")
+            }}
+          />
+        ) : null}
+        <div className={`image-fallback flex-col items-center justify-center text-arcadia-sand/50 ${image ? "hidden" : "flex"}`}>
+          <Home size={28} />
+          <p className="text-xs mt-1">No image yet</p>
+        </div>
+      </div>
       <div className="p-4">
         <span className="text-xs font-medium px-2 py-1 rounded-full bg-arcadia-moss text-arcadia-cream">{status}</span>
         <h2 className="font-semibold text-lg text-arcadia-cream mt-2">{houseType}</h2>

@@ -162,36 +162,11 @@ const MessagesPage = () => {
                   <p className="text-arcadia-sand text-sm max-w-md line-clamp-2">{enquiry.message}</p>
                 </div>
               </div>
-
               <div className="flex items-center gap-4">
                 <span className="text-arcadia-sand text-sm flex items-center gap-2">
                   <Clock size={16} />
                   {enquiry.createdAt}
                 </span>
-
-                {enquiry.assignedAgentId ? (
-                  <span className="text-xs px-3 py-1.5 rounded-full bg-arcadia-leaf/20 text-arcadia-leaf">
-                    Assigned to {agents.find((a) => a.id === enquiry.assignedAgentId)?.name}
-                  </span>
-                ) : (
-                  <select
-                    onChange={(e) => { if (e.target.value) assignAgent(enquiry.id, e.target.value) }}
-                    defaultValue=""
-                    className="bg-arcadia-bark border border-arcadia-bark rounded-lg px-3 py-2 text-arcadia-cream text-sm focus:outline-none focus:border-arcadia-moss"
-                  >
-                    <option value="">Assign to agent</option>
-                    {agents.map((agent) => (
-                      <option key={agent.id} value={agent.id}>{agent.name}</option>
-                    ))}
-                  </select>
-                )}
-              </div>
-              <div className="flex items-center gap-4">
-                <span className="text-arcadia-sand text-sm flex items-center gap-2">
-                  <Clock size={16} />
-                  {enquiry.createdAt}
-                </span>
-
                 {!enquiry.isRead && (
                   <button
                     onClick={(e) => { e.stopPropagation(); markGeneralAsRead(enquiry.id) }}

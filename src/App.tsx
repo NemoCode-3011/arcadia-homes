@@ -21,6 +21,7 @@ import ProtectedRoute from "./components/layout/ProtectedRoute"
 import { AuthProvider } from "./context/AuthContext"
 import PublicProtectedRoute from "./components/layout/PublicProtectedRoutes"
 import ScrollToTop from "./components/ui/ScrollTop"
+import SuperAdminRoute from "./components/layout/SuperadminRoute";
 const App = () => {
   const [loading, setLoading] = useState(true)
 
@@ -62,7 +63,9 @@ const App = () => {
             <Route path="/propertiesdetail/:id" element={<PropertyDetails />} />
             <Route path="/messages" element={<MessagesPage />} />
             <Route path="/settings" element={<Settings />} />
-            <Route path="/agents" element={<ManageAgentPage />} />
+            <Route element={<SuperAdminRoute />}>
+              <Route path="/agents" element={<ManageAgentPage />} />
+            </Route>
           </Route>
         </Route>
       </Routes>
