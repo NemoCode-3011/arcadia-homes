@@ -154,7 +154,6 @@ const AdminSignInPage = () => {
 
           {/* Form */}
           <div className="space-y-5">
-
             {/* Email */}
             <div className="space-y-2">
               <label className="text-sm font-medium text-arcadia-sand">
@@ -170,7 +169,6 @@ const AdminSignInPage = () => {
                 className="w-full h-11 px-4 bg-transparent border border-arcadia-bark rounded-lg text-arcadia-cream placeholder:text-arcadia-bark focus:outline-none focus:border-arcadia-moss transition-colors"
               />
             </div>
-
             {/* Password */}
             <div className="space-y-2">
               <label className="text-sm font-medium text-arcadia-sand">
@@ -195,14 +193,12 @@ const AdminSignInPage = () => {
                 </button>
               </div>
             </div>
-
             {/* Forgot Password */}
             <div className="flex justify-end">
               <button className="text-sm text-arcadia-moss hover:text-arcadia-leaf transition-colors">
                 Forgot password?
               </button>
             </div>
-
             {/* Submit */}
             <button
               type="button"
@@ -219,7 +215,6 @@ const AdminSignInPage = () => {
                 "Sign In"
               )}
             </button>
-
           </div>
         </div>
       </div>
