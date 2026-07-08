@@ -249,15 +249,20 @@ const MessagesPage = () => {
             </div>
 
             <div className="flex gap-3 pt-2">
-              <button className="flex-1 py-3 rounded-lg bg-arcadia-moss text-arcadia-cream text-sm font-medium hover:bg-arcadia-leaf transition-colors">
-                Reply via Email
-              </button>
-            </div>
+              < a href={`https://mail.google.com/mail/?view=cm&to=${selectedMessage.senderEmail || selectedMessage.email}&su=Re: Your Enquiry about ${encodeURIComponent(selectedMessage.propertyName || "a property")} — Arcadia Homes&body=Hi ${encodeURIComponent(selectedMessage.senderName || selectedMessage.name)},%0A%0AThank you for reaching out to Arcadia Homes.%0A%0A`}
+              target="_blank"
+              rel="noreferrer"
+              className="flex-1 py-3 rounded-lg bg-arcadia-moss text-arcadia-cream text-sm font-medium hover:bg-arcadia-leaf transition-colors text-center"
+>
+              Reply via Email
+            </a>
           </div>
         </div>
-      )}
+        </div>
+  )
+}
 
-    </div>
+    </div >
   )
 }
 
