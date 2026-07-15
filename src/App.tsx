@@ -1,35 +1,35 @@
-import { Route, Routes } from "react-router-dom"
-import SignUpPage from "./pages/auth/SignUpPage"
-import SignInPage from "./pages/auth/SignInPage"
-import HomePage from "./pages/admin/HomePage"
-import Propertiespage from "./pages/admin/Propertiespage"
-import PropertyDetails from "./pages/admin/PropertyDetails"
-import DashboardLayout from "./components/layout/DashboardLayout"
-import MessagesPage from "./pages/admin/MessagesPage"
-import Settings from "./pages/admin/Settings"
-import PublicDashboardLayout from "./components/layout/PublicDashboardLayout"
-import LandingPage from "./pages/public/LandingPage"
-import ListingsPage from "./pages/public/ListingsPage"
-import ListingsDetails from "./pages/public/ListingsDetails"
-import ContactPage from "./pages/public/ContactPage"
-import ManageAgentPage from "./pages/admin/ManageAgentPage"
-import AdminSignInPage from "./pages/admin/AdminSignInPage"
-import AboutPage from "./pages/public/AboutPage"
-import AgentSignUpPage from "./pages/admin/AgentSignUpPage"
-import LoadingScreen from "./components/ui/LoadingScreen"
-import { useState } from "react"
-import ProtectedRoute from "./components/layout/ProtectedRoute"
-import { AuthProvider } from "./context/AuthContext"
-import { PropertiesProvider } from "./context/PropertiesContext"
-import PublicProtectedRoute from "./components/layout/PublicProtectedRoutes"
-import SuperAdminRoute from "./components/layout/SuperadminRoute"
-import ScrollToTop from "./components/ui/ScrollTop"
+import { Route, Routes } from "react-router-dom";
+import SignUpPage from "./pages/auth/SignUpPage";
+import SignInPage from "./pages/auth/SignInPage";
+import HomePage from "./pages/admin/HomePage";
+import Propertiespage from "./pages/admin/Propertiespage";
+import PropertyDetails from "./pages/admin/PropertyDetails";
+import DashboardLayout from "./components/layout/DashboardLayout";
+import MessagesPage from "./pages/admin/MessagesPage";
+import Settings from "./pages/admin/Settings";
+import PublicDashboardLayout from "./components/layout/PublicDashboardLayout";
+import LandingPage from "./pages/public/LandingPage";
+import ListingsPage from "./pages/public/ListingsPage";
+import ListingsDetails from "./pages/public/ListingsDetails";
+import ContactPage from "./pages/public/ContactPage";
+import ManageAgentPage from "./pages/admin/ManageAgentPage";
+import AdminSignInPage from "./pages/admin/AdminSignInPage";
+import AboutPage from "./pages/public/AboutPage";
+import AgentSignUpPage from "./pages/admin/AgentSignUpPage";
+import LoadingScreen from "./components/ui/LoadingScreen";
+import { useState } from "react";
+import ProtectedRoute from "./components/layout/ProtectedRoute";
+import { AuthProvider } from "./context/AuthContext";
+import { PropertiesProvider } from "./context/PropertiesContext";
+import PublicProtectedRoute from "./components/layout/PublicProtectedRoutes";
+import SuperAdminRoute from "./components/layout/SuperadminRoute";
+import ScrollToTop from "./components/ui/ScrollTop";
 
 const App = () => {
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
 
   if (loading) {
-    return <LoadingScreen onComplete={() => setLoading(false)} />
+    return <LoadingScreen onComplete={() => setLoading(false)} />;
   }
 
   return (
@@ -37,7 +37,6 @@ const App = () => {
       <PropertiesProvider>
         <ScrollToTop />
         <Routes>
-
           {/* Open public routes */}
           <Route element={<PublicDashboardLayout />}>
             <Route path="/" element={<LandingPage />} />
@@ -68,21 +67,22 @@ const App = () => {
             <Route element={<DashboardLayout />}>
               <Route path="/dashboard" element={<HomePage />} />
               <Route path="/properties" element={<Propertiespage />} />
-              <Route path="/propertiesdetail/:id" element={<PropertyDetails />} />
+              <Route
+                path="/propertiesdetail/:id"
+                element={<PropertyDetails />}
+              />
               <Route path="/messages" element={<MessagesPage />} />
               <Route path="/settings" element={<Settings />} />
-
               {/* Super Admin only */}
               <Route element={<SuperAdminRoute />}>
                 <Route path="/agents" element={<ManageAgentPage />} />
               </Route>
             </Route>
           </Route>
-
         </Routes>
       </PropertiesProvider>
     </AuthProvider>
-  )
-}
+  );
+};
 
-export default App
+export default App;
