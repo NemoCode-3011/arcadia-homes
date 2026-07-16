@@ -1,28 +1,29 @@
-import PropertyCard from "../../components/ui/PropertyCard"
-import FilterBar from "../../components/ui/FilterBar"
-import { useState } from "react"
-import { agents } from "../../data/agents"
-import { useAuth } from "../../context/AuthContext"
-import { useProperties } from "../../context/PropertiesContext"
-import { Upload, Loader2 } from "lucide-react"
+import PropertyCard from "../../components/ui/PropertyCard";
+import FilterBar from "../../components/ui/FilterBar";
+import { useState } from "react";
+import { agents } from "../../data/agents";
+import { useAuth } from "../../context/AuthContext";
+import { useProperties } from "../../context/PropertiesContext";
+import { Upload, Loader2 } from "lucide-react";
 
 const Propertiespage = () => {
-  const { user } = useAuth()
-  const { properties, addProperty } = useProperties()
-  const isSuperAdmin = user?.role === "super_admin"
+  const { user } = useAuth();
+  const { properties, addProperty } = useProperties();
+  const isSuperAdmin = user?.role === "super_admin";
 
-  const [activeFilter, setActiveFIlter] = useState("All")
+  const [activeFilter, setActiveFIlter] = useState("All");
 
   const visibleProperties = isSuperAdmin
     ? properties
-    : properties.filter((p) => p.agent.id === user?.id)
+    : properties.filter((p) => p.agent.id === user?.id);
 
-  const filtered = activeFilter === "All"
-    ? visibleProperties
-    : visibleProperties.filter((p) => p.status === activeFilter)
+  const filtered =
+    activeFilter === "All"
+      ? visibleProperties
+      : visibleProperties.filter((p) => p.status === activeFilter);
 
-  const [openModal, setOpenModal] = useState(false)
-  const [imagePreview, setImagePreview] = useState<string | null>(null)
+  const [openModal, setOpenModal] = useState(false);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
     houseType: "",
@@ -33,22 +34,24 @@ const Propertiespage = () => {
     status: "",
     description: "",
     agentId: isSuperAdmin ? "" : user?.id || "",
-  })
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState("")
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
   ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-    if (error) setError("")
-  }
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (error) setError("");
+  };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-    setImagePreview(URL.createObjectURL(file))
-  }
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setImagePreview(URL.createObjectURL(file));
+  };
 
   // ─── TODO: Replace with API call ──────────────────
   // const handleAddProperty = async () => {
@@ -72,22 +75,27 @@ const Propertiespage = () => {
   // ───────────────────────────────────────────────────
 
   const handleAddProperty = () => {
-    const finalAgentId = isSuperAdmin ? formData.agentId : user?.id
+    const finalAgentId = isSuperAdmin ? formData.agentId : user?.id;
 
     if (
-      !formData.houseType || !formData.location || !formData.price ||
-      !formData.bedrooms || !formData.bathrooms || !formData.status ||
-      !formData.description || !finalAgentId
+      !formData.houseType ||
+      !formData.location ||
+      !formData.price ||
+      !formData.bedrooms ||
+      !formData.bathrooms ||
+      !formData.status ||
+      !formData.description ||
+      !finalAgentId
     ) {
-      setError("Please fill in all fields.")
-      return
+      setError("Please fill in all fields.");
+      return;
     }
 
-    setLoading(true)
-    setError("")
+    setLoading(true);
+    setError("");
 
     setTimeout(() => {
-      const agent = agents.find((a) => a.id === finalAgentId)
+      const agent = agents.find((a) => a.id === finalAgentId);
 
       const newProperty = {
         id: Date.now().toString(),
@@ -105,19 +113,24 @@ const Propertiespage = () => {
           phone: agent?.phone || "",
           email: agent?.email || "",
         },
-      }
+      };
 
-      addProperty(newProperty) // goes into shared context — visible on ALL pages
-      setLoading(false)
-      setOpenModal(false)
-      setImagePreview(null)
+      addProperty(newProperty); // goes into shared context — visible on ALL pages
+      setLoading(false);
+      setOpenModal(false);
+      setImagePreview(null);
       setFormData({
-        houseType: "", location: "", price: "", bedrooms: "",
-        bathrooms: "", status: "", description: "",
+        houseType: "",
+        location: "",
+        price: "",
+        bedrooms: "",
+        bathrooms: "",
+        status: "",
+        description: "",
         agentId: isSuperAdmin ? "" : user?.id || "",
-      })
-    }, 800)
-  }
+      });
+    }, 800);
+  };
 
   return (
     <div className="space-y-5">
@@ -126,10 +139,19 @@ const Propertiespage = () => {
           <h1 className="text-3xl text-arcadia-cream font-semibold">
             {isSuperAdmin ? "All Properties" : "My Properties"}
           </h1>
-          <h1 onClick={() => setOpenModal(true)} className="text-4xl text-arcadia-sand cursor-pointer">+</h1>
+          {isSuperAdmin && (
+            <h1
+              onClick={() => setOpenModal(true)}
+              className="text-4xl text-arcadia-sand cursor-pointer"
+            >
+              +
+            </h1>
+          )}
         </div>
         <p className="text-arcadia-sand text-sm">
-          {isSuperAdmin ? "Browse the current listings" : "Properties assigned to you"}
+          {isSuperAdmin
+            ? "Browse the current listings"
+            : "Properties assigned to you"}
         </p>
       </header>
 
@@ -160,15 +182,26 @@ const Propertiespage = () => {
       {openModal && (
         <div
           className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center"
-          onClick={() => { setOpenModal(false); setImagePreview(null) }}>
+          onClick={() => {
+            setOpenModal(false);
+            setImagePreview(null);
+          }}
+        >
           <div
             className="w-full max-w-lg h-[90vh] bg-arcadia-stone rounded-2xl shadow-2xl overflow-y-auto"
-            onClick={(e) => e.stopPropagation()}>
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="flex justify-between items-center p-6 border-b border-arcadia-bark sticky top-0 bg-arcadia-stone z-10">
-              <h1 className="text-2xl font-semibold text-arcadia-cream">Add Property</h1>
+              <h1 className="text-2xl font-semibold text-arcadia-cream">
+                Add Property
+              </h1>
               <button
-                onClick={() => { setOpenModal(false); setImagePreview(null) }}
-                className="px-4 py-2 border border-arcadia-bark rounded-xl text-arcadia-sand hover:bg-arcadia-bark transition-colors">
+                onClick={() => {
+                  setOpenModal(false);
+                  setImagePreview(null);
+                }}
+                className="px-4 py-2 border border-arcadia-bark rounded-xl text-arcadia-sand hover:bg-arcadia-bark transition-colors"
+              >
                 Close
               </button>
             </div>
@@ -184,66 +217,121 @@ const Propertiespage = () => {
               <div>
                 {imagePreview ? (
                   <div className="relative">
-                    <img src={imagePreview} alt="Preview" className="w-full h-48 object-cover rounded-xl" />
-                    <button type="button" onClick={() => setImagePreview(null)}
-                      className="absolute top-2 right-2 px-3 py-1.5 rounded-lg bg-arcadia-charcoal/80 text-arcadia-cream text-xs hover:bg-red-900/60 transition-colors">
+                    <img
+                      src={imagePreview}
+                      alt="Preview"
+                      className="w-full h-48 object-cover rounded-xl"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setImagePreview(null)}
+                      className="absolute top-2 right-2 px-3 py-1.5 rounded-lg bg-arcadia-charcoal/80 text-arcadia-cream text-xs hover:bg-red-900/60 transition-colors"
+                    >
                       Remove
                     </button>
                   </div>
                 ) : (
                   <label className="border-2 border-dashed border-arcadia-bark rounded-xl p-8 flex flex-col items-center justify-center cursor-pointer hover:border-arcadia-moss transition-colors w-full">
                     <Upload className="w-10 h-10 text-arcadia-sand mb-2" />
-                    <p className="text-sm text-arcadia-sand">Upload Property Image</p>
-                    <input type="file" accept="image/*" className="hidden" onChange={handleImageChange} />
+                    <p className="text-sm text-arcadia-sand">
+                      Upload Property Image
+                    </p>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handleImageChange}
+                    />
                   </label>
                 )}
               </div>
 
               {/* House Type */}
               <div className="space-y-2">
-                <label className="text-sm font-medium text-arcadia-sand">House Type <sup className="text-red-500">*</sup></label>
-                <input name="houseType" type="text" placeholder="e.g Luxury Villa, Duplex"
-                  value={formData.houseType} onChange={handleChange}
-                  className="w-full h-10 px-4 bg-transparent border border-arcadia-bark rounded-lg text-arcadia-cream placeholder:text-arcadia-bark focus:outline-none focus:border-arcadia-moss" />
+                <label className="text-sm font-medium text-arcadia-sand">
+                  House Type <sup className="text-red-500">*</sup>
+                </label>
+                <input
+                  name="houseType"
+                  type="text"
+                  placeholder="e.g Luxury Villa, Duplex"
+                  value={formData.houseType}
+                  onChange={handleChange}
+                  className="w-full h-10 px-4 bg-transparent border border-arcadia-bark rounded-lg text-arcadia-cream placeholder:text-arcadia-bark focus:outline-none focus:border-arcadia-moss"
+                />
               </div>
 
               {/* Location */}
               <div className="space-y-2">
-                <label className="text-sm font-medium text-arcadia-sand">Location <sup className="text-red-500">*</sup></label>
-                <input name="location" type="text" placeholder="e.g Lekki, Lagos"
-                  value={formData.location} onChange={handleChange}
-                  className="w-full h-10 px-4 bg-transparent border border-arcadia-bark rounded-lg text-arcadia-cream placeholder:text-arcadia-bark focus:outline-none focus:border-arcadia-moss" />
+                <label className="text-sm font-medium text-arcadia-sand">
+                  Location <sup className="text-red-500">*</sup>
+                </label>
+                <input
+                  name="location"
+                  type="text"
+                  placeholder="e.g Lekki, Lagos"
+                  value={formData.location}
+                  onChange={handleChange}
+                  className="w-full h-10 px-4 bg-transparent border border-arcadia-bark rounded-lg text-arcadia-cream placeholder:text-arcadia-bark focus:outline-none focus:border-arcadia-moss"
+                />
               </div>
 
               {/* Price */}
               <div className="space-y-2">
-                <label className="text-sm font-medium text-arcadia-sand">Price <sup className="text-red-500">*</sup></label>
-                <input name="price" type="number" placeholder="e.g 45000000"
-                  value={formData.price} onChange={handleChange}
-                  className="w-full h-10 px-4 bg-transparent border border-arcadia-bark rounded-lg text-arcadia-cream placeholder:text-arcadia-bark focus:outline-none focus:border-arcadia-moss" />
+                <label className="text-sm font-medium text-arcadia-sand">
+                  Price <sup className="text-red-500">*</sup>
+                </label>
+                <input
+                  name="price"
+                  type="number"
+                  placeholder="e.g 45000000"
+                  value={formData.price}
+                  onChange={handleChange}
+                  className="w-full h-10 px-4 bg-transparent border border-arcadia-bark rounded-lg text-arcadia-cream placeholder:text-arcadia-bark focus:outline-none focus:border-arcadia-moss"
+                />
               </div>
 
               {/* Bedrooms + Bathrooms */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-arcadia-sand">Bedrooms <sup className="text-red-500">*</sup></label>
-                  <input name="bedrooms" type="number" placeholder="e.g 4"
-                    value={formData.bedrooms} onChange={handleChange}
-                    className="w-full h-10 px-4 bg-transparent border border-arcadia-bark rounded-lg text-arcadia-cream placeholder:text-arcadia-bark focus:outline-none focus:border-arcadia-moss" />
+                  <label className="text-sm font-medium text-arcadia-sand">
+                    Bedrooms <sup className="text-red-500">*</sup>
+                  </label>
+                  <input
+                    name="bedrooms"
+                    type="number"
+                    placeholder="e.g 4"
+                    value={formData.bedrooms}
+                    onChange={handleChange}
+                    className="w-full h-10 px-4 bg-transparent border border-arcadia-bark rounded-lg text-arcadia-cream placeholder:text-arcadia-bark focus:outline-none focus:border-arcadia-moss"
+                  />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-arcadia-sand">Bathrooms <sup className="text-red-500">*</sup></label>
-                  <input name="bathrooms" type="number" placeholder="e.g 3"
-                    value={formData.bathrooms} onChange={handleChange}
-                    className="w-full h-10 px-4 bg-transparent border border-arcadia-bark rounded-lg text-arcadia-cream placeholder:text-arcadia-bark focus:outline-none focus:border-arcadia-moss" />
+                  <label className="text-sm font-medium text-arcadia-sand">
+                    Bathrooms <sup className="text-red-500">*</sup>
+                  </label>
+                  <input
+                    name="bathrooms"
+                    type="number"
+                    placeholder="e.g 3"
+                    value={formData.bathrooms}
+                    onChange={handleChange}
+                    className="w-full h-10 px-4 bg-transparent border border-arcadia-bark rounded-lg text-arcadia-cream placeholder:text-arcadia-bark focus:outline-none focus:border-arcadia-moss"
+                  />
                 </div>
               </div>
 
               {/* Status */}
               <div className="space-y-2">
-                <label className="text-sm font-medium text-arcadia-sand">Status <sup className="text-red-500">*</sup></label>
-                <select name="status" value={formData.status} onChange={handleChange}
-                  className="w-full h-10 px-4 bg-arcadia-stone border border-arcadia-bark rounded-lg text-arcadia-cream focus:outline-none focus:border-arcadia-moss">
+                <label className="text-sm font-medium text-arcadia-sand">
+                  Status <sup className="text-red-500">*</sup>
+                </label>
+                <select
+                  name="status"
+                  value={formData.status}
+                  onChange={handleChange}
+                  className="w-full h-10 px-4 bg-arcadia-stone border border-arcadia-bark rounded-lg text-arcadia-cream focus:outline-none focus:border-arcadia-moss"
+                >
                   <option value="">Select Status</option>
                   <option value="For Sale">For Sale</option>
                   <option value="For Rent">For Rent</option>
@@ -253,15 +341,22 @@ const Propertiespage = () => {
               {/* Listed by */}
               <div className="space-y-2">
                 <label className="text-sm font-medium text-arcadia-sand">
-                  Listed by {isSuperAdmin && <sup className="text-red-500">*</sup>}
+                  Listed by{" "}
+                  {isSuperAdmin && <sup className="text-red-500">*</sup>}
                 </label>
                 {isSuperAdmin ? (
-                  <select name="agentId" value={formData.agentId} onChange={handleChange}
-                    className="w-full h-10 px-4 bg-arcadia-stone border border-arcadia-bark rounded-lg text-arcadia-cream focus:outline-none focus:border-arcadia-moss">
+                  <select
+                    name="agentId"
+                    value={formData.agentId}
+                    onChange={handleChange}
+                    className="w-full h-10 px-4 bg-arcadia-stone border border-arcadia-bark rounded-lg text-arcadia-cream focus:outline-none focus:border-arcadia-moss"
+                  >
                     <option value="">Select Agent</option>
                     <option value={user?.id}>Myself ({user?.name})</option>
                     {agents.map((agent) => (
-                      <option key={agent.id} value={agent.id}>{agent.name}</option>
+                      <option key={agent.id} value={agent.id}>
+                        {agent.name}
+                      </option>
                     ))}
                   </select>
                 ) : (
@@ -273,23 +368,40 @@ const Propertiespage = () => {
 
               {/* Description */}
               <div className="space-y-2">
-                <label className="text-sm font-medium text-arcadia-sand">Description <sup className="text-red-500">*</sup></label>
-                <textarea name="description" placeholder="Enter property description" rows={4}
-                  value={formData.description} onChange={handleChange}
-                  className="w-full px-4 py-3 bg-transparent border border-arcadia-bark rounded-lg text-arcadia-cream placeholder:text-arcadia-bark focus:outline-none focus:border-arcadia-moss resize-none" />
+                <label className="text-sm font-medium text-arcadia-sand">
+                  Description <sup className="text-red-500">*</sup>
+                </label>
+                <textarea
+                  name="description"
+                  placeholder="Enter property description"
+                  rows={4}
+                  value={formData.description}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 bg-transparent border border-arcadia-bark rounded-lg text-arcadia-cream placeholder:text-arcadia-bark focus:outline-none focus:border-arcadia-moss resize-none"
+                />
               </div>
 
               {/* Submit */}
-              <button type="button" onClick={handleAddProperty} disabled={loading}
-                className="w-full py-3 rounded-lg bg-arcadia-moss text-arcadia-cream font-medium hover:bg-arcadia-leaf transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
-                {loading ? (<><Loader2 size={18} className="animate-spin" /> Adding...</>) : "Add Property"}
+              <button
+                type="button"
+                onClick={handleAddProperty}
+                disabled={loading}
+                className="w-full py-3 rounded-lg bg-arcadia-moss text-arcadia-cream font-medium hover:bg-arcadia-leaf transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              >
+                {loading ? (
+                  <>
+                    <Loader2 size={18} className="animate-spin" /> Adding...
+                  </>
+                ) : (
+                  "Add Property"
+                )}
               </button>
             </div>
           </div>
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Propertiespage
+export default Propertiespage;

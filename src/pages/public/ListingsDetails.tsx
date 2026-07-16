@@ -1,29 +1,46 @@
-import { useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
-import { properties } from "../../data/properties"
-import { ArrowLeft, MapPin, BedDouble, Bath, Tag, Loader2, X } from "lucide-react"
-import { messages } from "../../data/messages"
+import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { properties } from "../../data/properties";
+import {
+  ArrowLeft,
+  MapPin,
+  BedDouble,
+  Bath,
+  Tag,
+  Loader2,
+  X,
+} from "lucide-react";
+import { messages } from "../../data/messages";
 
 const ListingsDetails = () => {
-  const { id } = useParams()
-  const navigate = useNavigate()
-  const property = properties.find((p) => p.id === id)
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const property = properties.find((p) => p.id === id);
 
-  const [showEnquiryModal, setShowEnquiryModal] = useState(false)
-  const [enquiryType, setEnquiryType] = useState<"viewing" | "message">("viewing")
-  const [enquiryData, setEnquiryData] = useState({ name: "", email: "", phone: "", message: "" })
-  const [loading, setLoading] = useState(false)
-  const [submitted, setSubmitted] = useState(false)
+  const [showEnquiryModal, setShowEnquiryModal] = useState(false);
+  const [enquiryType, setEnquiryType] = useState<"viewing" | "message">(
+    "viewing",
+  );
+  const [enquiryData, setEnquiryData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setEnquiryData({ ...enquiryData, [e.target.name]: e.target.value })
-  }
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    setEnquiryData({ ...enquiryData, [e.target.name]: e.target.value });
+  };
 
   const openModal = (type: "viewing" | "message") => {
-    setEnquiryType(type)
-    setSubmitted(false)
-    setShowEnquiryModal(true)
-  }
+    setEnquiryType(type);
+    setSubmitted(false);
+    setShowEnquiryModal(true);
+  };
 
   // ─── TODO: Replace with API call ──────────────────
   // const handleEnquirySubmit = async () => {
@@ -49,37 +66,50 @@ const ListingsDetails = () => {
   // ───────────────────────────────────────────────────
 
   const handleEnquirySubmit = () => {
-    if (!property) return
-    if (!enquiryData.name || !enquiryData.email || !enquiryData.message) return
+    if (!property) return;
+    if (!enquiryData.name || !enquiryData.email || !enquiryData.message) return;
 
-    setLoading(true)
+    setLoading(true);
+
+    // ─── TODO: Replace with POST /api/enquiries/general ───────────────────────
+    // const response = await fetch("/api/enquiries/general", {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify({
+    //     ...enquiryData,
+    //     propertyId: property.id,
+    //     propertyName: property.houseType,
+    //     intent: enquiryType === "viewing" ? "Schedule Viewing" : "General Enquiry",
+    //   })
+    // })
+    // ──────────────────────────────────────────────────────────────────────────
 
     setTimeout(() => {
-      // this automatically inherits the agent from the property —
-      // no Super Admin involvement needed, it goes straight to the listing agent
-      const newMessage = {
+      // This goes to Super Admin's General Enquiries tab
+      // Super Admin then assigns it to the right agent
+      const newGeneralEnquiry = {
         id: Date.now().toString(),
-        senderName: enquiryData.name,
-        senderEmail: enquiryData.email,
+        name: enquiryData.name,
+        email: enquiryData.email,
+        phone: enquiryData.phone,
+        message:
+          enquiryType === "viewing"
+            ? `[Schedule Viewing] ${enquiryData.message}`
+            : enquiryData.message,
+        intent: "Buy" as const,
         propertyId: property.id,
         propertyName: property.houseType,
         location: property.location,
-        agentId: property.agent.id,
-        message:
-          enquiryType === "viewing"
-            ? `[Viewing Request] ${enquiryData.message}`
-            : enquiryData.message,
+        assignedAgentId: null, // ← null until Super Admin assigns
         isRead: false,
         createdAt: "Just now",
-      }
+      };
 
-      console.log("New property enquiry:", newMessage)
-      messages.unshift(newMessage) // temporary — replaced by API later
-
-      setLoading(false)
-      setSubmitted(true)
-    }, 800)
-  }
+      console.log("Enquiry sent to Super Admin:", newGeneralEnquiry);
+      setLoading(false);
+      setSubmitted(true);
+    }, 800);
+  };
 
   if (!property) {
     return (
@@ -95,12 +125,11 @@ const ListingsDetails = () => {
           </button>
         </div>
       </div>
-    )
+    );
   }
 
   return (
     <div className="min-h-screen bg-arcadia-charcoal">
-
       {/* Hero Image */}
       <div className="relative w-full h-[55vh] overflow-hidden">
         <img
@@ -138,10 +167,8 @@ const ListingsDetails = () => {
       {/* Content */}
       <div className="max-w-7xl mx-auto px-6 py-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-
           {/* Left — details */}
           <div className="lg:col-span-2 space-y-8">
-
             <div className="flex flex-wrap items-center gap-6">
               <p className="text-3xl font-semibold text-arcadia-leaf">
                 ₦{property.price.toLocaleString()}
@@ -186,7 +213,10 @@ const ListingsDetails = () => {
                   { label: "Status", value: property.status },
                   { label: "Bedrooms", value: property.bedrooms },
                   { label: "Bathrooms", value: property.bathrooms },
-                  { label: "Price", value: `₦${property.price.toLocaleString()}` },
+                  {
+                    label: "Price",
+                    value: `₦${property.price.toLocaleString()}`,
+                  },
                 ].map((detail) => (
                   <div
                     key={detail.label}
@@ -207,7 +237,6 @@ const ListingsDetails = () => {
           {/* Right — agent card */}
           <div className="space-y-4">
             <div className="bg-arcadia-stone border border-arcadia-bark rounded-xl p-6 space-y-5 sticky top-6">
-
               <h3 className="text-arcadia-cream font-semibold">
                 Contact Agent
               </h3>
@@ -220,9 +249,7 @@ const ListingsDetails = () => {
                   <p className="text-arcadia-cream font-medium">
                     {property.agent.name}
                   </p>
-                  <p className="text-arcadia-sand/60 text-xs">
-                    Arcadia Agent
-                  </p>
+                  <p className="text-arcadia-sand/60 text-xs">Arcadia Agent</p>
                 </div>
               </div>
 
@@ -262,7 +289,6 @@ const ListingsDetails = () => {
               View more properties →
             </button>
           </div>
-
         </div>
       </div>
 
@@ -278,7 +304,9 @@ const ListingsDetails = () => {
           >
             <div className="flex justify-between items-center border-b border-arcadia-bark pb-4">
               <h2 className="text-xl font-semibold text-arcadia-cream">
-                {enquiryType === "viewing" ? "Schedule a Viewing" : "Message the Agent"}
+                {enquiryType === "viewing"
+                  ? "Schedule a Viewing"
+                  : "Message the Agent"}
               </h2>
               <button
                 onClick={() => setShowEnquiryModal(false)}
@@ -292,10 +320,14 @@ const ListingsDetails = () => {
               <div className="text-center py-6 space-y-3">
                 <p className="text-4xl">✅</p>
                 <p className="text-arcadia-cream font-medium">
-                  Sent to {property.agent.name}!
+                  Enquiry received!
                 </p>
                 <p className="text-arcadia-sand text-sm">
-                  They'll get back to you about {property.houseType} shortly.
+                  Our team will review your enquiry about{" "}
+                  <span className="text-arcadia-leaf">
+                    {property.houseType}
+                  </span>{" "}
+                  and an agent will reach out to you shortly.
                 </p>
                 <button
                   onClick={() => setShowEnquiryModal(false)}
@@ -307,12 +339,18 @@ const ListingsDetails = () => {
             ) : (
               <>
                 <p className="text-arcadia-sand text-sm">
-                  Regarding: <span className="text-arcadia-leaf">{property.houseType}</span> — {property.location}
+                  Regarding:{" "}
+                  <span className="text-arcadia-leaf">
+                    {property.houseType}
+                  </span>{" "}
+                  — {property.location}
                 </p>
 
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-arcadia-sand">Full Name</label>
+                    <label className="text-sm font-medium text-arcadia-sand">
+                      Full Name
+                    </label>
                     <input
                       name="name"
                       type="text"
@@ -324,7 +362,9 @@ const ListingsDetails = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-arcadia-sand">Email</label>
+                    <label className="text-sm font-medium text-arcadia-sand">
+                      Email
+                    </label>
                     <input
                       name="email"
                       type="email"
@@ -336,7 +376,9 @@ const ListingsDetails = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-arcadia-sand">Phone</label>
+                    <label className="text-sm font-medium text-arcadia-sand">
+                      Phone
+                    </label>
                     <input
                       name="phone"
                       type="tel"
@@ -348,7 +390,9 @@ const ListingsDetails = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-arcadia-sand">Message</label>
+                    <label className="text-sm font-medium text-arcadia-sand">
+                      Message
+                    </label>
                     <textarea
                       name="message"
                       rows={3}
@@ -384,9 +428,8 @@ const ListingsDetails = () => {
           </div>
         </div>
       )}
-
     </div>
-  )
-}
+  );
+};
 
-export default ListingsDetails
+export default ListingsDetails;
