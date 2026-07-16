@@ -92,7 +92,7 @@ const Navbar = () => {
             <button
               onClick={() => {
                 userLogout();
-                navigate("/");
+                navigate("/signin");
               }}
               className="px-5 py-2 rounded-lg border border-arcadia-bark text-arcadia-sand text-sm font-medium hover:bg-arcadia-bark transition-colors"
             >
@@ -160,7 +160,7 @@ const Navbar = () => {
             <button
               onClick={() => {
                 userLogout();
-                navigate("/");
+                navigate("/signin");
                 setMenuOpen(false);
               }}
               className="w-full py-2 rounded-lg border border-arcadia-bark text-arcadia-sand text-sm font-medium hover:bg-arcadia-bark transition-colors"
