@@ -10,7 +10,6 @@ import {
   Loader2,
   X,
 } from "lucide-react";
-import { messages } from "../../data/messages";
 
 const ListingsDetails = () => {
   const { id } = useParams();
