@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import logo from "../../assets/logo-img-5.png";
+import { Loader2 } from "lucide-react";
 
 const Navbar = () => {
   const { isUserAuthenticated, userLogout } = useAuth();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [loggingOut, setLoggingOut] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -91,12 +93,24 @@ const Navbar = () => {
           {isUserAuthenticated ? (
             <button
               onClick={() => {
-                userLogout();
-                navigate("/signin");
+                setLoggingOut(true);
+                setTimeout(() => {
+                  userLogout();
+                  navigate("/signin");
+                  setLoggingOut(false);
+                }, 800);
               }}
-              className="px-5 py-2 rounded-lg border border-arcadia-bark text-arcadia-sand text-sm font-medium hover:bg-arcadia-bark transition-colors"
+              disabled={loggingOut}
+              className="px-5 py-2 rounded-lg border border-arcadia-bark text-arcadia-sand text-sm font-medium hover:bg-arcadia-bark transition-colors disabled:opacity-50 flex items-center gap-2"
             >
-              Log Out
+              {loggingOut ? (
+                <>
+                  <Loader2 size={14} className="animate-spin" />
+                  Logging out...
+                </>
+              ) : (
+                "Log Out"
+              )}
             </button>
           ) : (
             <>
@@ -159,13 +173,25 @@ const Navbar = () => {
           {isUserAuthenticated ? (
             <button
               onClick={() => {
-                userLogout();
-                navigate("/signin");
-                setMenuOpen(false);
+                setLoggingOut(true);
+                setTimeout(() => {
+                  userLogout();
+                  navigate("/signin");
+                  setMenuOpen(false);
+                  setLoggingOut(false);
+                }, 800);
               }}
-              className="w-full py-2 rounded-lg border border-arcadia-bark text-arcadia-sand text-sm font-medium hover:bg-arcadia-bark transition-colors"
+              disabled={loggingOut}
+              className="w-full py-2 rounded-lg border border-arcadia-bark text-arcadia-sand text-sm font-medium hover:bg-arcadia-bark transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
             >
-              Log Out
+              {loggingOut ? (
+                <>
+                  <Loader2 size={14} className="animate-spin" />
+                  Logging out...
+                </>
+              ) : (
+                "Log Out"
+              )}
             </button>
           ) : (
             <>
